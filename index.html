@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walibee – Premium Passport Covers</title>
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Custom Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            waliblue: "#88C9FF",
+            waliyellow: "#F5C542",
+            waliyellowdark: "#B1972B",
+          },
+          fontFamily: {
+            sans: ["Poppins", "sans-serif"],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .fade-in { animation: fadeIn .8s ease forwards; opacity: 0; }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .dark body { background: #0e0e0e; }
+  </style>
+</head>
+
+<body class="font-sans bg-white text-gray-900 transition-colors duration-300">
+
+<!-- DARK MODE TOGGLE -->
+<button id="dark-toggle"
+        class="fixed top-4 right-4 z-50 p-2 bg-gray-100 dark:bg-gray-700 rounded-full shadow-lg transition">
+  <i data-feather="moon"></i>
+</button>
+
+<!-- HERO SECTION -->
+<header class="max-w-6xl mx-auto text-center px-6 py-24 fade-in">
+  <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+    Elevate Your Journey with  
+    <span class="text-waliyellow">Walibee Passport Covers</span>
+  </h1>
+
+  <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-6">
+    Premium custom passport covers crafted with hand-picked materials,
+    personalization options, and worldwide delivery.
+  </p>
+
+  <div class="flex justify-center gap-4 mt-10">
+    <a href="#design"
+       class="px-8 py-4 rounded-lg bg-waliblue text-white font-semibold shadow-md hover:shadow-xl transition">
+      Design Yours
+    </a>
+
+    <a href="#shop"
+       class="px-8 py-4 rounded-lg border-2 border-waliyellow font-semibold hover:bg-waliyellow hover:text-white transition">
+      Shop Collection
+    </a>
+  </div>
+
+  <div class="mt-12 flex justify-center">
+    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764b7a"
+         class="rounded-2xl shadow-xl w-full max-w-3xl hover:scale-[1.02] transition-transform">
+  </div>
+</header>
+
+<!-- DESIGN STUDIO -->
+<section id="design" class="max-w-6xl mx-auto bg-white dark:bg-[#1b1b1b] shadow-lg rounded-2xl p-10 mb-20 fade-in">
+  <h2 class="text-3xl font-bold text-center mb-10">Passport Design Studio</h2>
+
+  <div class="flex flex-col lg:flex-row gap-12">
+
+    <!-- PREVIEW -->
+    <div class="lg:w-1/2">
+      <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-4 shadow-inner">
+        <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-300">
+          <img id="passport-preview"
+               src="https://i.imgur.com/kqYxF8L.jpeg"
+               class="w-full h-full object-cover transition-all duration-300">
+
+          <div id="text-overlay"
+               class="absolute bottom-4 left-4 font-bold text-white text-xl drop-shadow-lg tracking-wide">
+            YOUR NAME
+          </div>
+        </div>
+      </div>
+
+      <button class="w-full mt-6 px-6 py-3 bg-waliyellow hover:bg-waliyellowdark text-white rounded-lg font-semibold transition">
+        Add to Cart
+      </button>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="lg:w-1/2 space-y-6">
+
+      <!-- Pinterest Upload -->
+      <div>
+        <label class="block mb-2 font-medium">Upload Image (Pinterest URL or File)</label>
+
+        <input id="pinterest-url"
+               type="text"
+               placeholder="Paste Pinterest image link..."
+               class="w-full px-4 py-3 border rounded-lg mb-3 focus:ring-2 focus:ring-waliyellow">
+
+        <input id="image-upload"
+               type="file"
+               accept="image/*"
+               class="w-full px-4 py-3 border rounded-lg bg-gray-50 cursor-pointer focus:ring-2 focus:ring-waliyellow">
+      </div>
+
+      <!-- Color Picker -->
+      <div>
+        <label class="block mb-2 font-medium">Cover Color</label>
+        <input type="color" id="cover-color" value="#88C9FF"
+               class="w-full h-12 rounded-lg cursor-pointer">
+      </div>
+
+      <!-- Text -->
+      <div>
+        <label class="block mb-2 font-medium">Personalized Text</label>
+        <input type="text" id="personal-text"
+               class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-waliyellow"
+               placeholder="Enter your name...">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="max-w-6xl mx-auto px-6 fade-in mb-20">
+  <h2 class="text-3xl font-bold text-center mb-10">Our Bestsellers</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    <div class="card rounded-xl shadow-lg hover:scale-[1.02] transition bg-white dark:bg-[#1b1b1b]">
+      <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" class="w-full rounded-t-xl">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Global Explorer</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Genuine leather with embossed world map</p>
+
+        <div class="flex justify-between items-center">
+          <span class="text-waliyellow font-bold text-lg">$34.99</span>
+          <button class="text-waliblue hover:underline flex items-center gap-1">
+            <i data-feather="shopping-cart"></i> Add
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="text-center py-10 text-gray-600 dark:text-gray-300">
+  © 2025 Walibee. All Rights Reserved.
+</footer>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
