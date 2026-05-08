@@ -40,21 +40,6 @@
     .remove-item{position:absolute;top:10px;right:10px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,.95);color:var(--secondary);font-size:1rem;cursor:pointer;display:none;box-shadow:0 8px 18px rgba(0,0,0,.14)}
     .section-remove{position:absolute;top:18px;right:18px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.95);color:var(--secondary);font-size:1.1rem;cursor:pointer;display:none;box-shadow:0 10px 20px rgba(0,0,0,.15);z-index:3}
     .section{position:relative}
-    .hero-gallery{position:absolute;inset:0;pointer-events:none;display:grid;place-items:center;z-index:0}
-    .hero-orbit{position:absolute;top:50%;left:50%;width:420px;height:420px;transform:translate(-50%,-50%);pointer-events:none;animation:orbitSpin 18s linear infinite}
-    .hero-orbit::before{content:'';position:absolute;inset:0;border:1px dashed rgba(255,255,255,.25);border-radius:50%}
-    .hero-orbit .orbit-item{position:absolute;width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.85);background:#fff;box-shadow:0 14px 25px rgba(0,0,0,.18)}
-    .hero-orbit .orbit-item:nth-child(1){top:0;left:50%;transform:translate(-50%,0)}
-    .hero-orbit .orbit-item:nth-child(2){top:16%;right:0;transform:translate(0,-50%)}
-    .hero-orbit .orbit-item:nth-child(3){bottom:16%;right:0;transform:translate(0,50%)}
-    .hero-orbit .orbit-item:nth-child(4){bottom:0;left:50%;transform:translate(-50%,0)}
-    .hero-orbit .orbit-item:nth-child(5){bottom:16%;left:0;transform:translate(0,50%)}
-    .hero-orbit .orbit-item:nth-child(6){top:16%;left:0;transform:translate(0,-50%)}
-    .hero-orbit img{width:100%;height:100%;object-fit:cover}
-    .gallery-controls{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:1rem}
-    .gallery-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem}
-    .gallery-preview img{width:100%;height:120px;object-fit:cover;border-radius:18px;border:2px solid rgba(10,124,132,.18);box-shadow:0 10px 24px rgba(0,0,0,.1)}
-    @keyframes orbitSpin{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
 
     /* HERO */
     .hero{min-height:100vh;background:linear-gradient(140deg,var(--dark) 0%,var(--secondary) 45%,var(--primary-dark) 75%,var(--primary) 100%);display:flex;align-items:center;padding-top:64px;position:relative;overflow:hidden}
@@ -297,13 +282,11 @@
     <button type="button" id="addHobbyBtn" class="btn btn-glass">+ Add Hobby</button>
     <button type="button" id="addSkillBtn" class="btn btn-glass">+ Add Skill</button>
     <button type="button" id="addSectionBtn" class="btn btn-glass">+ Add Section</button>
-    <label for="photoUpload" class="btn btn-glass">+ Add Hobby Photo</label>
     <button type="button" id="saveEditsBtn" class="btn btn-gold">Save Changes</button>
     <button type="button" id="clearAllBtn" class="btn btn-glass">Restore Defaults</button>
     <div class="edit-hint">Use the buttons to update page copy, add/remove content, and store your changes locally.</div>
   </div>
 </div>
-<input type="file" id="photoUpload" accept="image/*" multiple hidden>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -357,16 +340,6 @@
         <div class="profile-ring">
           <div class="profile-inner">
             <img src="profile.png" alt="Wali Baig"/>
-          </div>
-        </div>
-        <div class="hero-gallery" id="heroGallery">
-          <div class="hero-orbit" id="heroOrbit">
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" alt="Gallery image 1"></div>
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" alt="Gallery image 2"></div>
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=200&q=80" alt="Gallery image 3"></div>
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Gallery image 4"></div>
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=200&q=80" alt="Gallery image 5"></div>
-            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=200&q=80" alt="Gallery image 6"></div>
           </div>
         </div>
         <div class="fc"><div class="fn">5+</div><div class="fl" data-i18n="fc1">Yrs Experience</div></div>
@@ -798,11 +771,6 @@
       <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🌱</span><div class="h-name" data-i18n="hb7" data-editable>Personal Growth</div></div>
       <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🎯</span><div class="h-name" data-i18n="hb8" data-editable>Strategic Planning</div></div>
     </div>
-    <div class="gallery-controls reveal">
-      <label for="photoUpload" class="btn btn-glass">📸 Add hobby photo</label>
-      <button type="button" class="btn btn-glass" id="clearHeroPhotos">Clear Gallery</button>
-    </div>
-    <div class="gallery-preview reveal" id="galleryPreview"></div>
   </div>
 </section>
 
@@ -1086,15 +1054,11 @@ const addSkillBtn = document.getElementById('addSkillBtn');
 const addSectionBtn = document.getElementById('addSectionBtn');
 const saveBtn = document.getElementById('saveEditsBtn');
 const clearBtn = document.getElementById('clearAllBtn');
-const photoUpload = document.getElementById('photoUpload');
-const galleryPreview = document.getElementById('galleryPreview');
-const heroOrbit = document.getElementById('heroOrbit');
 const hobbiesGrid = document.getElementById('hobbiesGrid');
 const toolsWrap = document.querySelector('.tools-wrap');
 const ctaSection = document.getElementById('contact');
 let editMode = false;
 let removeMode = false;
-let heroPhotos = [];
 let skillTags = [];
 let addedSections = [];
 let removedSectionIds = [];
@@ -1291,33 +1255,6 @@ function attachRemoveListeners() {
   });
 }
 
-function loadHeroPhotos() {
-  const stored = localStorage.getItem('heroGalleryPhotos');
-  heroPhotos = stored ? JSON.parse(stored) : [];
-  renderHeroGallery();
-  renderPhotoPreview();
-}
-
-function renderHeroGallery() {
-  const slots = heroOrbit.querySelectorAll('.orbit-item');
-  slots.forEach((slot, idx) => {
-    const img = slot.querySelector('img') || document.createElement('img');
-    if (!slot.querySelector('img')) slot.appendChild(img);
-    img.src = heroPhotos[idx] || img.dataset.default || img.src;
-    img.alt = `Hero photo ${idx + 1}`;
-  });
-}
-
-function renderPhotoPreview() {
-  galleryPreview.innerHTML = '';
-  heroPhotos.forEach((src, idx) => {
-    const image = document.createElement('img');
-    image.src = src;
-    image.alt = `Preview ${idx + 1}`;
-    galleryPreview.appendChild(image);
-  });
-}
-
 function getEditKey(el) {
   return el.dataset.i18n || el.dataset.editableKey || el.id || `${el.tagName.toLowerCase()}-${Array.from(document.querySelectorAll(el.tagName)).indexOf(el)}`;
 }
@@ -1329,7 +1266,6 @@ function savePageState() {
     if (key) editable[key] = el.innerHTML;
   });
   localStorage.setItem('pageEditorContent', JSON.stringify(editable));
-  localStorage.setItem('heroGalleryPhotos', JSON.stringify(heroPhotos));
   localStorage.setItem('hobbyCards', JSON.stringify(Array.from(hobbiesGrid.querySelectorAll('.hobby-card')).map(card => ({ icon: card.querySelector('.h-ico')?.textContent || '', title: card.querySelector('.h-name')?.innerHTML || '', key: card.querySelector('.h-name')?.dataset.editableKey || '' }))));
   saveCustomState();
 }
@@ -1356,7 +1292,6 @@ function restorePageState() {
     });
   }
   attachRemoveListeners();
-  loadHeroPhotos();
   loadSkillTags();
   loadAddedSections();
   loadRemovedSections();
@@ -1366,26 +1301,9 @@ function restorePageState() {
 function clearAllEdits() {
   if (!confirm('Restore the page to the original defaults?')) return;
   localStorage.removeItem('pageEditorContent');
-  localStorage.removeItem('heroGalleryPhotos');
   localStorage.removeItem('hobbyCards');
   location.reload();
 }
-
-photoUpload.addEventListener('change', e => {
-  const files = Array.from(e.target.files).slice(0, 6);
-  if (!files.length) return;
-  const readers = files.map(file => new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  }));
-  Promise.all(readers).then(images => {
-    heroPhotos = images;
-    savePageState();
-    renderHeroGallery();
-    renderPhotoPreview();
-  });
-});
 
 clearBtn.addEventListener('click', clearAllEdits);
 saveBtn.addEventListener('click', savePageState);
@@ -1394,13 +1312,6 @@ removeBtn.addEventListener('click', toggleRemoveMode);
 addHobbyBtn.addEventListener('click', addHobbyCard);
 addSkillBtn.addEventListener('click', addSkillTag);
 addSectionBtn.addEventListener('click', addSection);
-document.getElementById('clearHeroPhotos').addEventListener('click', () => {
-  heroPhotos = [];
-  savePageState();
-  renderHeroGallery();
-  renderPhotoPreview();
-});
-photoUpload.addEventListener('click', e => e.target.value = '');
 
 attachRemoveListeners();
 restorePageState();
