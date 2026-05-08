@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wali Baig | Compliance &amp; Regulatory Affairs Professional</title>
+  <style>
+    :root{--primary:#0a7c84;--primary-dark:#065a5f;--secondary:#1e3a5f;--accent:#f0a500;--light:#f4f7fa;--dark:#0d1b2a;--text:#2c3e50;--text-light:#6b7a8d;--white:#fff;--shadow-sm:0 2px 8px rgba(0,0,0,.08);--shadow:0 6px 25px rgba(0,0,0,.1);--shadow-lg:0 15px 50px rgba(0,0,0,.15);--radius:16px;--tr:all .35s cubic-bezier(.4,0,.2,1)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--light);line-height:1.65;overflow-x:hidden}
+
+    /* PROGRESS */
+    #prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:9999;transition:width .1s linear}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 2rem;gap:1rem}
+    .nav-logo{font-weight:800;font-size:1.1rem;color:var(--primary);white-space:nowrap}
+    .nav-logo span{color:var(--secondary)}
+    .nav-links{display:flex;gap:3px;list-style:none;flex-wrap:wrap}
+    .nav-links a{text-decoration:none;color:var(--text-light);padding:5px 12px;border-radius:30px;font-size:.82rem;font-weight:500;transition:var(--tr)}
+    .nav-links a:hover,.nav-links a.active{background:var(--primary);color:#fff}
+
+    /* Language toggle */
+    .lang-switcher{display:flex;align-items:center;background:var(--light);border:2px solid var(--primary);border-radius:30px;overflow:hidden;flex-shrink:0}
+    .lang-btn{padding:5px 14px;font-size:.78rem;font-weight:700;color:var(--primary);cursor:pointer;transition:var(--tr);background:transparent;border:none;line-height:1}
+    .lang-btn.active{background:var(--primary);color:#fff}
+    .lang-btn:not(.active):hover{background:rgba(10,124,132,.1)}
+    .lang-div{width:1px;background:var(--primary);opacity:.3;align-self:stretch}
+
+    .admin-panel{position:fixed;top:84px;right:1rem;z-index:1100;width:300px;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border:1px solid rgba(15,76,88,.14);border-radius:24px;box-shadow:0 18px 45px rgba(0,0,0,.18);padding:1rem;transition:var(--tr)}
+    .admin-panel h4{font-size:.95rem;color:var(--secondary);margin-bottom:.8rem;font-weight:800}
+    .admin-actions{display:grid;gap:.65rem}
+    .admin-panel button,.admin-panel label{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1rem;border-radius:999px;border:1px solid rgba(10,124,132,.15);background:#fff;color:var(--secondary);font-weight:700;cursor:pointer;transition:var(--tr);font-size:.85rem}
+    .admin-panel button:hover,.admin-panel label:hover{background:rgba(10,124,132,.08)}
+    .admin-panel button.active{background:var(--primary);color:#fff;border-color:transparent}
+    .editable-on{outline:2px dashed rgba(240,165,0,.65);outline-offset:4px}
+    .edit-hint{font-size:.78rem;color:var(--text-light);margin-top:.55rem}
+    .remove-item{position:absolute;top:10px;right:10px;width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,.95);color:var(--secondary);font-size:1rem;cursor:pointer;display:none;box-shadow:0 8px 18px rgba(0,0,0,.14)}
+    .section-remove{position:absolute;top:18px;right:18px;width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.95);color:var(--secondary);font-size:1.1rem;cursor:pointer;display:none;box-shadow:0 10px 20px rgba(0,0,0,.15);z-index:3}
+    .section{position:relative}
+    .hero-gallery{position:absolute;inset:0;pointer-events:none;display:grid;place-items:center;z-index:0}
+    .hero-orbit{position:absolute;top:50%;left:50%;width:420px;height:420px;transform:translate(-50%,-50%);pointer-events:none;animation:orbitSpin 18s linear infinite}
+    .hero-orbit::before{content:'';position:absolute;inset:0;border:1px dashed rgba(255,255,255,.25);border-radius:50%}
+    .hero-orbit .orbit-item{position:absolute;width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.85);background:#fff;box-shadow:0 14px 25px rgba(0,0,0,.18)}
+    .hero-orbit .orbit-item:nth-child(1){top:0;left:50%;transform:translate(-50%,0)}
+    .hero-orbit .orbit-item:nth-child(2){top:16%;right:0;transform:translate(0,-50%)}
+    .hero-orbit .orbit-item:nth-child(3){bottom:16%;right:0;transform:translate(0,50%)}
+    .hero-orbit .orbit-item:nth-child(4){bottom:0;left:50%;transform:translate(-50%,0)}
+    .hero-orbit .orbit-item:nth-child(5){bottom:16%;left:0;transform:translate(0,50%)}
+    .hero-orbit .orbit-item:nth-child(6){top:16%;left:0;transform:translate(0,-50%)}
+    .hero-orbit img{width:100%;height:100%;object-fit:cover}
+    .gallery-controls{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:1rem}
+    .gallery-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem}
+    .gallery-preview img{width:100%;height:120px;object-fit:cover;border-radius:18px;border:2px solid rgba(10,124,132,.18);box-shadow:0 10px 24px rgba(0,0,0,.1)}
+    @keyframes orbitSpin{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+
+    /* HERO */
+    .hero{min-height:100vh;background:linear-gradient(140deg,var(--dark) 0%,var(--secondary) 45%,var(--primary-dark) 75%,var(--primary) 100%);display:flex;align-items:center;padding-top:64px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+    .hero-grid{max-width:1200px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;position:relative;z-index:1}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3);color:var(--accent);padding:6px 16px;border-radius:30px;font-size:.78rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1.25rem}
+    .hero h1{font-size:clamp(2.5rem,5vw,3.75rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:.25rem;letter-spacing:-1px}
+    .hero h1 .ac{color:var(--accent)}
+    .hero-sub{font-size:1.05rem;color:rgba(255,255,255,.75);margin-bottom:1.75rem;line-height:1.5}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:2rem}
+    .hero-meta-item{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:.85rem}
+    .hero-meta-item .dot{color:var(--accent)}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem}
+    .hero-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;padding:5px 14px;border-radius:30px;font-size:.78rem;font-weight:500}
+    .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;font-weight:600;font-size:.9rem;text-decoration:none;cursor:pointer;border:none;transition:var(--tr);white-space:nowrap}
+    .btn-gold{background:linear-gradient(135deg,var(--accent),#d4920a);color:var(--dark);box-shadow:0 4px 20px rgba(240,165,0,.35)}
+    .btn-gold:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(240,165,0,.5)}
+    .btn-glass{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(8px)}
+    .btn-glass:hover{background:rgba(255,255,255,.18);transform:translateY(-3px)}
+
+    /* PROFILE VISUAL */
+    .hero-visual{display:flex;justify-content:center;align-items:center}
+    .profile-wrap{position:relative;width:300px;height:300px}
+    .profile-ring{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;background:conic-gradient(var(--accent),var(--primary),var(--secondary),var(--accent));padding:5px;animation:spin 10s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .profile-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;animation:spin 10s linear infinite reverse;background:var(--secondary)}
+    .profile-inner img{width:100%;height:100%;object-fit:cover;object-position:center top}
+    .fc{position:absolute;background:#fff;border-radius:14px;padding:9px 13px;box-shadow:0 10px 30px rgba(0,0,0,.2);min-width:110px;text-align:center;animation:float 3.5s ease-in-out infinite}
+    .fc .fn{font-size:1.3rem;font-weight:900;color:var(--primary)}
+    .fc .fl{font-size:.62rem;color:var(--text-light);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+    .fc:nth-child(1){top:-12px;left:-65px;animation-delay:0s}
+    .fc:nth-child(2){top:-12px;right:-65px;animation-delay:.9s}
+    .fc:nth-child(3){bottom:-12px;left:-65px;animation-delay:.45s}
+    .fc:nth-child(4){bottom:-12px;right:-65px;animation-delay:1.35s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+    /* SECTIONS */
+    .section{padding:5.5rem 2rem}
+    .section-white{background:#fff}
+    .section-light{background:var(--light)}
+    .container{max-width:1200px;margin:0 auto}
+    .section-header{text-align:center;margin-bottom:3.5rem}
+    .pill{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:5px 16px;border-radius:30px;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1rem}
+    .sec-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;color:var(--secondary);letter-spacing:-.5px;margin-bottom:.75rem}
+    .sec-sub{color:var(--text-light);font-size:1rem;max-width:580px;margin:0 auto}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:3rem;align-items:start}
+    .about-lead{font-size:1rem;color:var(--text);line-height:1.85;margin-bottom:1.25rem}
+    .about-lead strong{color:var(--primary)}
+    .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+    .comp-card{background:var(--light);border-radius:12px;padding:1.25rem;border-left:4px solid var(--primary);transition:var(--tr)}
+    .comp-card:hover{transform:translateX(6px);box-shadow:var(--shadow)}
+    .comp-card h4{font-size:.75rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem}
+    .comp-card p{font-size:.82rem;color:var(--text-light);line-height:1.6}
+    .contact-card{background:linear-gradient(160deg,var(--secondary),var(--primary-dark));border-radius:20px;padding:2rem;color:#fff;box-shadow:0 20px 50px rgba(30,58,95,.35)}
+    .contact-card h3{font-size:1.1rem;margin-bottom:1.5rem;opacity:.9}
+    .ci{display:flex;align-items:center;gap:12px;margin-bottom:1rem;font-size:.875rem;color:rgba(255,255,255,.85)}
+    .ci-icon{width:34px;height:34px;background:rgba(255,255,255,.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+    .ci a{color:rgba(255,255,255,.85);text-decoration:none;transition:var(--tr)}
+    .ci a:hover{color:var(--accent)}
+
+    /* TIMELINE */
+    .timeline{position:relative;max-width:900px;margin:0 auto}
+    .timeline::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--primary),var(--secondary))}
+    .tl-item{padding-left:74px;margin-bottom:2.5rem;position:relative;opacity:0;transform:translateX(-20px);transition:opacity .55s ease,transform .55s ease}
+    .tl-item.vis{opacity:1;transform:translateX(0)}
+    .tl-dot{position:absolute;left:17px;top:22px;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--primary);box-shadow:0 0 0 4px rgba(10,124,132,.2)}
+    .tl-dot.active{background:var(--primary)}
+    .tl-card{background:#fff;border-radius:var(--radius);padding:1.85rem;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,.05);transition:var(--tr)}
+    .tl-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+    .tl-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+    .tl-title{font-size:1.05rem;font-weight:700;color:var(--secondary)}
+    .tl-period{background:rgba(10,124,132,.08);color:var(--primary);padding:3px 12px;border-radius:20px;font-size:.76rem;font-weight:600}
+    .tl-company{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:600;font-size:.9rem;margin-bottom:2px}
+    .tl-logo-wrap{display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(0,0,0,0.09);border-radius:8px;padding:4px 8px;box-shadow:0 1px 5px rgba(0,0,0,0.07)}
+    .tl-logo-wrap img{height:28px;width:auto;max-width:130px;object-fit:contain;display:block}
+    .tl-loc{color:var(--text-light);font-size:.8rem;margin-bottom:1rem}
+    .tl-ctx{font-size:.86rem;font-style:italic;color:var(--text-light);background:var(--light);border-left:3px solid var(--primary);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:1rem}
+    .tl-ul{list-style:none}
+    .tl-ul li{padding:4px 0 4px 20px;position:relative;font-size:.875rem;color:var(--text);line-height:1.65}
+    .tl-ul li::before{content:'▸';position:absolute;left:0;color:var(--primary);font-size:.75rem;top:5px}
+    .tl-ul li strong{color:var(--primary)}
+
+    /* EDUCATION */
+    .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;max-width:900px;margin:0 auto}
+    .edu-card{background:#fff;border-radius:20px;padding:2rem;box-shadow:var(--shadow-sm);border-top:5px solid var(--primary);transition:var(--tr);opacity:0;transform:translateY(24px)}
+    .edu-card.vis{opacity:1;transform:translateY(0)}
+    .edu-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+    .uni-logo-wrap{display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(0,0,0,0.09);border-radius:10px;padding:8px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);margin-bottom:1rem}
+    .uni-logo-wrap img{height:38px;width:auto;max-width:160px;object-fit:contain;display:block}
+    .edu-tag{display:inline-block;background:rgba(10,124,132,.08);color:var(--primary);padding:3px 12px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
+    .edu-badge-distinction{display:inline-block;background:linear-gradient(135deg,var(--accent),#d4920a);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-left:6px}
+    .edu-degree{font-size:1.15rem;font-weight:800;color:var(--secondary);margin-bottom:4px}
+    .edu-school{color:var(--primary);font-weight:600;font-size:.88rem;margin-bottom:3px}
+    .edu-period{color:var(--text-light);font-size:.8rem;margin-bottom:1.25rem}
+    .edu-divider{border:none;border-top:1px solid var(--light);margin-bottom:1rem}
+    .edu-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.84rem}
+    .edu-row span:first-child{color:var(--text-light)}
+    .edu-row span:last-child{font-weight:700;color:var(--secondary)}
+    .module-wrap{margin-top:.85rem}
+    .mod-tag{display:inline-block;background:rgba(10,124,132,.08);color:var(--primary);padding:3px 9px;border-radius:12px;font-size:.72rem;margin:2px}
+
+    /* CERTIFICATIONS */
+    .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:3rem auto 0}
+    .cert-card{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow-sm);display:flex;gap:1.1rem;align-items:flex-start;transition:var(--tr);opacity:0;transform:translateY(20px)}
+    .cert-card.vis{opacity:1;transform:translateY(0)}
+    .cert-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .cert-icon-box{width:48px;height:48px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,var(--accent),#d4920a);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .cert-name{font-size:.92rem;font-weight:700;color:var(--secondary);margin-bottom:3px}
+    .cert-org{color:var(--primary);font-size:.8rem;font-weight:600;margin-bottom:4px}
+    .cert-desc{color:var(--text-light);font-size:.78rem;line-height:1.5}
+
+    /* SKILLS */
+    .skills-wrap{max-width:1000px;margin:0 auto}
+    .skill-section{margin-bottom:3rem}
+    .skill-sec-title{display:flex;align-items:center;gap:12px;font-size:.95rem;font-weight:700;color:var(--secondary);margin-bottom:1.5rem}
+    .skill-sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(to right,var(--primary),transparent)}
+    .s-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;flex-shrink:0}
+    .skill-rows{display:grid;gap:1rem}
+    .skill-row{opacity:0;transform:translateX(-16px);transition:opacity .45s ease,transform .45s ease}
+    .skill-row.vis{opacity:1;transform:translateX(0)}
+    .skill-row-top{display:flex;justify-content:space-between;margin-bottom:6px}
+    .skill-name-txt{font-size:.875rem;font-weight:600;color:var(--text)}
+    .skill-pct{font-size:.78rem;font-weight:700;color:var(--primary)}
+    .skill-bar{height:7px;background:var(--light);border-radius:10px;overflow:hidden}
+    .skill-bar-fill{height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+    .tools-wrap{display:flex;flex-wrap:wrap;gap:9px}
+    .tool-tag{background:#fff;border:2px solid rgba(10,124,132,.12);color:var(--text);padding:6px 16px;border-radius:30px;font-size:.82rem;font-weight:500;transition:var(--tr);cursor:default;opacity:0;transform:scale(.88)}
+    .tool-tag.vis{opacity:1;transform:scale(1)}
+    .tool-tag:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.06)}
+
+    /* EDI SECTION */
+    .edi-intro{max-width:800px;margin:0 auto 3rem;text-align:center;font-size:1rem;color:var(--text);line-height:1.8}
+    .edi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.75rem;margin-bottom:3rem}
+    .edi-card{background:#fff;border-radius:20px;padding:1.75rem;box-shadow:var(--shadow-sm);border-top:4px solid var(--primary);transition:var(--tr);opacity:0;transform:translateY(22px)}
+    .edi-card.vis{opacity:1;transform:translateY(0)}
+    .edi-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .edi-card-icon{font-size:2rem;margin-bottom:.75rem;display:block}
+    .edi-card-title{font-size:1rem;font-weight:700;color:var(--secondary);margin-bottom:.5rem}
+    .edi-card-text{font-size:.86rem;color:var(--text-light);line-height:1.7}
+    .edi-timeline{max-width:800px;margin:0 auto}
+    .edi-tl-item{display:flex;gap:1.5rem;margin-bottom:2rem;opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+    .edi-tl-item.vis{opacity:1;transform:translateY(0)}
+    .edi-tl-year{min-width:60px;text-align:center}
+    .edi-tl-year .yr{font-size:1rem;font-weight:900;color:var(--primary)}
+    .edi-tl-year .yr-line{width:2px;background:linear-gradient(to bottom,var(--primary),transparent);height:calc(100% - 30px);margin:6px auto 0}
+    .edi-tl-body{background:#fff;border-radius:14px;padding:1.25rem 1.5rem;box-shadow:var(--shadow-sm);flex:1;border-left:3px solid var(--primary)}
+    .edi-tl-body h4{font-size:.95rem;font-weight:700;color:var(--secondary);margin-bottom:.35rem}
+    .edi-tl-body p{font-size:.84rem;color:var(--text-light);line-height:1.7}
+    .edi-why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:3rem}
+    .edi-why-card{background:linear-gradient(135deg,var(--secondary),var(--primary-dark));border-radius:16px;padding:1.5rem;color:#fff;opacity:0;transform:scale(.93);transition:opacity .5s ease,transform .5s ease}
+    .edi-why-card.vis{opacity:1;transform:scale(1)}
+    .edi-why-card:hover{transform:scale(1.03)}
+    .edi-why-card .wi{font-size:1.6rem;margin-bottom:.6rem;display:block}
+    .edi-why-card h4{font-size:.88rem;font-weight:700;margin-bottom:.4rem}
+    .edi-why-card p{font-size:.8rem;color:rgba(255,255,255,.8);line-height:1.6}
+
+    /* VOLUNTEERING */
+    .vol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;max-width:900px;margin:0 auto}
+    .vol-card{background:#fff;border-radius:20px;padding:2rem;box-shadow:var(--shadow-sm);transition:var(--tr);border:1px solid rgba(0,0,0,.05);opacity:0;transform:translateY(22px)}
+    .vol-card.vis{opacity:1;transform:translateY(0)}
+    .vol-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .vol-icon-box{width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:1.75rem;margin-bottom:1.1rem}
+    .vol-role{font-size:1rem;font-weight:700;color:var(--secondary);margin-bottom:3px}
+    .vol-org{color:var(--primary);font-weight:600;font-size:.87rem;margin-bottom:3px}
+    .vol-period{color:var(--text-light);font-size:.79rem;margin-bottom:1rem}
+    .vol-desc{color:var(--text);font-size:.86rem;line-height:1.75}
+    .vol-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:.85rem}
+    .vol-tag{background:rgba(10,124,132,.08);color:var(--primary);padding:3px 10px;border-radius:12px;font-size:.74rem;font-weight:600}
+
+    /* LANGUAGES */
+    .lang-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;max-width:900px;margin:0 auto}
+    .lang-card{background:#fff;border-radius:20px;padding:2rem;box-shadow:var(--shadow-sm);text-align:center;transition:var(--tr);opacity:0;transform:translateY(24px)}
+    .lang-card.vis{opacity:1;transform:translateY(0)}
+    .lang-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+    .lang-flag{font-size:2.6rem;margin-bottom:.6rem}
+    .lang-name{font-size:1.3rem;font-weight:800;color:var(--secondary);margin-bottom:2px}
+    .lang-lev{color:var(--primary);font-weight:700;font-size:.88rem;margin-bottom:1.5rem}
+    .lang-ring-wrap{position:relative;width:110px;height:110px;margin:0 auto 1.5rem}
+    .lang-ring-wrap svg{transform:rotate(-90deg);overflow:visible}
+    .ring-bg{fill:none;stroke:var(--light);stroke-width:9}
+    .ring-fg{fill:none;stroke-width:9;stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}
+    .ring-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.2rem;font-weight:900;color:var(--secondary)}
+    .lang-sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}
+    .lang-sub-key{font-size:.78rem;color:var(--text-light);margin-bottom:1px}
+    .lang-sub-val{font-size:.78rem;color:var(--primary);font-weight:700}
+
+    /* HOBBIES */
+    .hobbies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1.25rem;max-width:1000px;margin:0 auto}
+    .hobby-card{background:#fff;border-radius:18px;padding:1.65rem 1rem;text-align:center;box-shadow:var(--shadow-sm);transition:var(--tr);cursor:default;opacity:0;transform:scale(.88)}
+    .hobby-card.vis{opacity:1;transform:scale(1)}
+    .hobby-card:hover{transform:translateY(-8px) scale(1.06);background:linear-gradient(135deg,var(--primary),var(--secondary));box-shadow:0 15px 35px rgba(10,124,132,.3)}
+    .hobby-card:hover .h-ico,.hobby-card:hover .h-name{color:#fff}
+    .h-ico{font-size:2.2rem;display:block;margin-bottom:.55rem;color:var(--primary);transition:var(--tr)}
+    .h-name{font-size:.82rem;font-weight:600;color:var(--text);transition:var(--tr)}
+
+    /* CTA */
+    .cta-section{background:linear-gradient(140deg,var(--secondary),var(--primary-dark),var(--primary));padding:6rem 2rem;text-align:center;position:relative;overflow:hidden}
+    .cta-section::before{content:'';position:absolute;top:-60%;right:-20%;width:600px;height:600px;border-radius:50%;background:rgba(255,255,255,.04)}
+    .cta-section h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:#fff;margin:1rem 0}
+    .cta-section p{color:rgba(255,255,255,.75);font-size:1rem;max-width:540px;margin:0 auto 2.5rem}
+
+    /* FOOTER */
+    footer{background:var(--dark);color:rgba(255,255,255,.65);padding:3rem 2rem;text-align:center}
+    .footer-name{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px}
+    .footer-sub{font-size:.83rem;margin-bottom:1.5rem}
+    .social-row{display:flex;justify-content:center;gap:12px;margin-bottom:1.5rem}
+    .soc-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:1rem;font-weight:700;transition:var(--tr)}
+    .soc-btn:hover{background:var(--primary);transform:translateY(-3px)}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.vis{opacity:1;transform:translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;text-align:center;gap:3rem}
+      .hero-meta,.hero-badges,.hero-cta{justify-content:center}
+      .fc{display:none}
+      .profile-wrap{width:220px;height:220px}
+      .about-grid{grid-template-columns:1fr}
+      .comp-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .section{padding:3.5rem 1.25rem}
+      .nav-links{display:none}
+      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:1rem;box-shadow:var(--shadow);gap:4px}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="admin-panel" id="adminPanel">
+  <h4>Page Tools</h4>
+  <div class="admin-actions">
+    <button type="button" id="toggleEditBtn">Edit Text</button>
+    <button type="button" id="toggleRemoveBtn">Remove Items</button>
+    <button type="button" id="addHobbyBtn" class="btn btn-glass">+ Add Hobby</button>
+    <button type="button" id="addSkillBtn" class="btn btn-glass">+ Add Skill</button>
+    <button type="button" id="addSectionBtn" class="btn btn-glass">+ Add Section</button>
+    <label for="photoUpload" class="btn btn-glass">+ Add Hobby Photo</label>
+    <button type="button" id="saveEditsBtn" class="btn btn-gold">Save Changes</button>
+    <button type="button" id="clearAllBtn" class="btn btn-glass">Restore Defaults</button>
+    <div class="edit-hint">Use the buttons to update page copy, add/remove content, and store your changes locally.</div>
+  </div>
+</div>
+<input type="file" id="photoUpload" accept="image/*" multiple hidden>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo"><span>WB</span> · Portfolio</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about" data-i18n="nav_about">About</a></li>
+      <li><a href="#experience" data-i18n="nav_exp">Experience</a></li>
+      <li><a href="#education" data-i18n="nav_edu">Education</a></li>
+      <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+      <li><a href="#edi" data-i18n="nav_edi">EDI</a></li>
+      <li><a href="#volunteering" data-i18n="nav_vol">Volunteering</a></li>
+      <li><a href="#languages" data-i18n="nav_lang">Languages</a></li>
+      <li><a href="#hobbies" data-i18n="nav_hobbies">Hobbies</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <div class="lang-div"></div>
+      <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag" data-i18n="hero_tag">🏙️ Berlin, Germany · Open to Opportunities</div>
+      <h1>Wali <span class="ac">Baig</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Compliance &amp; Regulatory Affairs Professional<br>MSc Project Management · Distinction · Lean Six Sigma Green Belt</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><span class="dot">●</span><span data-i18n="hero_m1">DM Clinical Research (Remote, USA)</span></div>
+        <div class="hero-meta-item"><span class="dot">●</span><span data-i18n="hero_m2">Arden University Berlin — Class of 2026</span></div>
+        <div class="hero-meta-item"><span class="dot">●</span><span data-i18n="hero_m3">5+ Years Experience</span></div>
+      </div>
+      <div class="hero-badges">
+        <span class="hero-badge" data-i18n="b1">🛡️ Regulatory Compliance</span>
+        <span class="hero-badge" data-i18n="b2">📊 Power BI</span>
+        <span class="hero-badge" data-i18n="b3">⚙️ Lean Six Sigma</span>
+        <span class="hero-badge" data-i18n="b4">📋 PMO Governance</span>
+        <span class="hero-badge" data-i18n="b5">🌍 EDI Advocate</span>
+      </div>
+      <div class="hero-cta">
+        <a href="mailto:mm.wali.baig@gmail.com" class="btn btn-gold" data-i18n="cta_email">✉️ Get in Touch</a>
+        <a href="https://www.linkedin.com/in/mwalibaig01/" target="_blank" class="btn btn-glass" data-i18n="cta_li">🔗 LinkedIn Profile</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="profile-wrap">
+        <div class="profile-ring">
+          <div class="profile-inner">
+            <img src="profile.png" alt="Wali Baig"/>
+          </div>
+        </div>
+        <div class="hero-gallery" id="heroGallery">
+          <div class="hero-orbit" id="heroOrbit">
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" alt="Gallery image 1"></div>
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" alt="Gallery image 2"></div>
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=200&q=80" alt="Gallery image 3"></div>
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Gallery image 4"></div>
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=200&q=80" alt="Gallery image 5"></div>
+            <div class="orbit-item"><img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=200&q=80" alt="Gallery image 6"></div>
+          </div>
+        </div>
+        <div class="fc"><div class="fn">5+</div><div class="fl" data-i18n="fc1">Yrs Experience</div></div>
+        <div class="fc"><div class="fn">98%</div><div class="fl" data-i18n="fc2">Compliance Rate</div></div>
+        <div class="fc"><div class="fn">25%</div><div class="fl" data-i18n="fc3">Efficiency Gain</div></div>
+        <div class="fc"><div class="fn">3</div><div class="fl" data-i18n="fc4">Languages</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-white" id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="about_pill">Professional Summary</div>
+      <h2 class="sec-title" data-i18n="about_title">About Me</h2>
+      <p class="sec-sub" data-i18n="about_sub">Detail-driven professional bridging compliance, governance, and inclusive leadership</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p class="about-lead reveal" data-i18n="about_p1">I am a <strong>Compliance &amp; Regulatory Affairs Professional</strong> with over 5 years of experience spanning financial compliance, PMO governance in clinical research, quality assurance, and regulatory reporting in IT-intensive environments.</p>
+        <p class="about-lead reveal" data-i18n="about_p2">My expertise lies in building robust compliance frameworks that bridge regulatory requirements with operational efficiency. From designing <strong>Compliance Monitoring Plans (CMPs)</strong> to automating provider performance dashboards using <strong>Power BI and Looker</strong>, I transform complex regulatory landscapes into actionable governance structures.</p>
+        <p class="about-lead reveal" data-i18n="about_p3">I graduated with <strong>Distinction</strong> from my <strong>MSc in Project Management</strong> at Arden University, Berlin Campus (Class of 2026). I am a <strong>Certified Lean Six Sigma Green Belt</strong> and a passionate <strong>EDI advocate</strong>, committed to creating inclusive environments where every voice is heard and valued.</p>
+        <div class="comp-grid">
+          <div class="comp-card reveal"><h4 data-i18n="cc1h">🛡️ Regulatory Compliance</h4><p data-i18n="cc1p">Risk Assessments, Thematic Reviews, Control Testing, Policy Development</p></div>
+          <div class="comp-card reveal"><h4 data-i18n="cc2h">📋 Governance &amp; Reporting</h4><p data-i18n="cc2p">Board Reporting, KPI Dashboards (Power BI), Compliance Monitoring Plans</p></div>
+          <div class="comp-card reveal"><h4 data-i18n="cc3h">⚙️ Process Improvement</h4><p data-i18n="cc3p">Lean Six Sigma Green Belt, Root Cause Analysis, Defect Lifecycle Management</p></div>
+          <div class="comp-card reveal"><h4 data-i18n="cc4h">🌍 EDI Leadership</h4><p data-i18n="cc4p">Inclusive Event Design, Student Engagement, Community Outreach, DEI Advocacy</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-card reveal">
+          <h3 data-i18n="contact_h">📬 Contact Information</h3>
+          <div class="ci"><div class="ci-icon">📞</div><a href="tel:+4917625047311">(+49) 176 2504731</a></div>
+          <div class="ci"><div class="ci-icon">✉️</div><a href="mailto:mm.wali.baig@gmail.com">mm.wali.baig@gmail.com</a></div>
+          <div class="ci"><div class="ci-icon">📍</div><span data-i18n="contact_addr">Mollstrasse 19, 10249, Berlin, Germany</span></div>
+          <div class="ci"><div class="ci-icon">🔗</div><a href="https://www.linkedin.com/in/mwalibaig01/" target="_blank">linkedin.com/in/mwalibaig01</a></div>
+          <div class="ci"><div class="ci-icon">🌍</div><span data-i18n="contact_permit">Pakistani · Work Permit: Germany</span></div>
+          <div class="ci"><div class="ci-icon">🎂</div><span data-i18n="contact_dob">25 November 1997 · Karachi, Pakistan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section section-light" id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="exp_pill">Career Journey</div>
+      <h2 class="sec-title" data-i18n="exp_title">Professional Experience</h2>
+      <p class="sec-sub" data-i18n="exp_sub">5+ years building expertise across compliance, governance, and quality assurance</p>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot active"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div class="tl-title" data-i18n="e1_title">Compliance &amp; PMO Administrator</div>
+            <div class="tl-period" data-i18n="e1_period">🟢 Apr 2022 – Jun 2025</div>
+          </div>
+          <div class="tl-company"><div class="tl-logo-wrap"><img src="dm-logo.png" alt="DM Clinical Research"/></div> DM Clinical Research</div>
+          <div class="tl-loc" data-i18n="e1_loc">📍 Houston, TX, USA (Remote)</div>
+          <div class="tl-ctx" data-i18n="e1_ctx">Financial services-adjacent compliance and project governance role supporting regulatory adherence, provider oversight, and reporting across Finance, Risk, and IT functions.</div>
+          <ul class="tl-ul">
+            <li data-i18n="e1_b1">Designed and maintained a <strong>Compliance Monitoring Plan (CMP)</strong> framework; performed regular control testing, documented findings, and escalated deficiencies to Senior Management</li>
+            <li data-i18n="e1_b2">Developed and automated provider performance dashboards using <strong>Power BI and Looker</strong>, reducing manual reporting effort by <strong>25%</strong></li>
+            <li data-i18n="e1_b3">Conducted compliance risk assessments, thematic reviews, and gap analyses with remediation action plans and deadline tracking</li>
+            <li data-i18n="e1_b4">Prepared KPI summaries, breach registers, and regulatory update briefings for Board of Directors and Senior Management</li>
+            <li data-i18n="e1_b5">Applied <strong>Lean Six Sigma</strong> methodology to identify process gaps; improvements increased reporting accuracy and reduced AR outstanding by <strong>30%</strong></li>
+            <li data-i18n="e1_b6">Coordinated internal and external audits; managed audit documentation packages and ensured timely evidence submission</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot active"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div class="tl-title" data-i18n="e3_title">Kitchen Support Staff (Werkstudent)</div>
+            <div class="tl-period" data-i18n="e3_period">🟢 Oct 2025 – Present</div>
+          </div>
+          <div class="tl-company">🏢 RiJu Connecting GmbH (Studentenwerk)</div>
+          <div class="tl-loc" data-i18n="e3_loc">📍 Berlin, Germany</div>
+          <div class="tl-ctx" data-i18n="e3_ctx">Supporting cafeteria operations while finalising MSc studies at Arden University Berlin Campus and integrating into the German professional environment.</div>
+          <ul class="tl-ul">
+            <li data-i18n="e3_b1">Managed food preparation and cafeteria operations during peak hours in compliance with <strong>HACCP standards</strong></li>
+            <li data-i18n="e3_b2">Operated computer-based ordering systems and handled interdepartmental email communication in German and English</li>
+            <li data-i18n="e3_b3">Demonstrated cross-cultural bilingual proficiency collaborating daily with a multilingual kitchen team</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div class="tl-title" data-i18n="e2_title">Software QA &amp; Compliance Analyst (Intern)</div>
+            <div class="tl-period" data-i18n="e2_period">Jan 2021 – Mar 2022</div>
+          </div>
+          <div class="tl-company">🏢 Abacus Global / JS Bank Zindigi</div>
+          <div class="tl-loc" data-i18n="e2_loc">📍 Islamabad, Pakistan</div>
+          <div class="tl-ctx" data-i18n="e2_ctx">Regulatory compliance and quality assurance role within a regulated Fintech environment, supporting financial services product delivery against compliance and operational standards.</div>
+          <ul class="tl-ul">
+            <li data-i18n="e2_b1">Ensured the <strong>Zindigi Mobile Banking</strong> application met regulatory requirements through structured testing of customer and agent transaction flows</li>
+            <li data-i18n="e2_b2">Designed and executed compliance-oriented test plans covering regulatory requirements, functional controls, and data integrity across multiple device categories</li>
+            <li data-i18n="e2_b3">Maintained a full defect lifecycle tracking register and collaborated with development teams in <strong>Agile sprints</strong> to validate corrections</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section section-white" id="education">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="edu_pill">Academic Background</div>
+      <h2 class="sec-title" data-i18n="edu_title">Education</h2>
+      <p class="sec-sub" data-i18n="edu_sub">Building a strong foundation in project management, business, and healthcare administration</p>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="uni-logo-wrap"><img src="arden-logo.png" alt="Arden University"/></div>
+        <div>
+          <span class="edu-tag" data-i18n="edu1_tag">🎓 Postgraduate · Completed</span>
+          <span class="edu-badge-distinction">🏆 Distinction</span>
+        </div>
+        <div class="edu-degree" data-i18n="edu1_deg">MSc Project Management</div>
+        <div class="edu-school">Arden University – Berlin Campus</div>
+        <div class="edu-period" data-i18n="edu1_period">📅 Graduated May 2026 · Berlin, Germany</div>
+        <hr class="edu-divider"/>
+        <div class="edu-row"><span data-i18n="edu1_r1a">Classification</span><span data-i18n="edu1_r1b">Distinction</span></div>
+        <div class="edu-row"><span data-i18n="edu1_r2a">Campus</span><span data-i18n="edu1_r2b">Berlin, Germany</span></div>
+        <div class="module-wrap">
+          <div style="font-size:.74rem;color:var(--text-light);margin-bottom:5px;" data-i18n="edu_mods">Key Modules:</div>
+          <span class="mod-tag" data-i18n="edu1_m1">Project Analytics &amp; Management Methods</span>
+          <span class="mod-tag" data-i18n="edu1_m2">Agile Methods in Digital Business</span>
+          <span class="mod-tag" data-i18n="edu1_m3">Cloud-Based Business Solutions</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="uni-logo-wrap"><img src="dow-logo.png" alt="Dow University"/></div>
+        <div class="edu-tag" data-i18n="edu2_tag">🎓 Undergraduate · Completed</div>
+        <div class="edu-degree" data-i18n="edu2_deg">Bachelor of Business Administration (BBA)</div>
+        <div class="edu-school">DUHS – Institute of Business &amp; Health Management</div>
+        <div class="edu-period" data-i18n="edu2_period">📅 Oct 2017 – Dec 2022 · Karachi, Pakistan</div>
+        <hr class="edu-divider"/>
+        <div class="edu-row"><span>CGPA</span><span>3.52 / 4.00</span></div>
+        <div class="edu-row"><span data-i18n="edu2_r1a">Classification</span><span data-i18n="edu2_r1b">Distinction</span></div>
+        <div class="module-wrap">
+          <div style="font-size:.74rem;color:var(--text-light);margin-bottom:5px;" data-i18n="edu_mods">Key Modules:</div>
+          <span class="mod-tag" data-i18n="edu2_m1">IT in Business</span>
+          <span class="mod-tag" data-i18n="edu2_m2">Operations Management</span>
+          <span class="mod-tag" data-i18n="edu2_m3">Business Communications</span>
+          <span class="mod-tag" data-i18n="edu2_m4">Digital Marketing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="section-header reveal" style="margin-top:4.5rem;">
+      <div class="pill" data-i18n="cert_pill">Professional Development</div>
+      <h2 class="sec-title" data-i18n="cert_title">Certifications</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card"><div class="cert-icon-box">🏆</div><div><div class="cert-name" data-i18n="c1n">Certified Lean Six Sigma Green Belt</div><div class="cert-org">IMC Institute · 2023</div><div class="cert-desc" data-i18n="c1d">Process control, root cause analysis, and compliance workflow optimisation</div></div></div>
+      <div class="cert-card"><div class="cert-icon-box">🏥</div><div><div class="cert-name" data-i18n="c2n">Biosafety &amp; Safety in Health Institutions</div><div class="cert-org">DUHS · 2020</div><div class="cert-desc" data-i18n="c2d">Regulatory safety standards in a licensed institutional environment</div></div></div>
+      <div class="cert-card"><div class="cert-icon-box">🎤</div><div><div class="cert-name" data-i18n="c3n">Toastmasters Leadership Certificate</div><div class="cert-org">Toastmasters International</div><div class="cert-desc" data-i18n="c3d">Public speaking, structured communication, and inclusive leadership</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section section-light" id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="skills_pill">Expertise</div>
+      <h2 class="sec-title" data-i18n="skills_title">Skills &amp; Competencies</h2>
+      <p class="sec-sub" data-i18n="skills_sub">A diverse technical and professional skill set built across multiple industries and regions</p>
+    </div>
+    <div class="skills-wrap">
+      <div class="skill-section">
+        <div class="skill-sec-title reveal"><span class="s-icon">🛡️</span><span data-i18n="sk1_title">Compliance &amp; Regulatory</span></div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk1_1">Compliance Risk Assessments</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="92"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk1_2">Control Testing &amp; Monitoring</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="90"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk1_3">Policy &amp; Procedure Development</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk1_4">Internal &amp; External Audit Support</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-section">
+        <div class="skill-sec-title reveal"><span class="s-icon">📊</span><span data-i18n="sk2_title">Governance &amp; Reporting</span></div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk2_1">Board &amp; Senior Mgmt Reporting</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="90"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk2_2">Power BI Dashboard Development</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="85"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk2_3">KPI Development &amp; Tracking</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk2_4">PMO Governance</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="82"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-section">
+        <div class="skill-sec-title reveal"><span class="s-icon">⚙️</span><span data-i18n="sk3_title">Process Improvement</span></div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk3_1">Lean Six Sigma (Green Belt)</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="88"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk3_2">Root Cause Analysis</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="85"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk3_3">Defect &amp; Issue Lifecycle Mgmt</span><span class="skill-pct">83%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="83"></div></div></div>
+          <div class="skill-row"><div class="skill-row-top"><span class="skill-name-txt" data-i18n="sk3_4">Agile / Scrum</span><span class="skill-pct">78%</span></div><div class="skill-bar"><div class="skill-bar-fill" data-w="78"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-section">
+        <div class="skill-sec-title reveal"><span class="s-icon">💻</span><span data-i18n="sk4_title">Tools &amp; Technology</span></div>
+        <div class="tools-wrap">
+          <span class="tool-tag">MS Excel</span><span class="tool-tag">Power BI</span><span class="tool-tag">SAP</span><span class="tool-tag">Jira</span><span class="tool-tag">Asana</span><span class="tool-tag">SharePoint</span><span class="tool-tag">Looker</span><span class="tool-tag">MS Teams</span><span class="tool-tag">Outlook</span><span class="tool-tag">PowerPoint</span><span class="tool-tag">Google Sheets</span><span class="tool-tag">Google Drive</span><span class="tool-tag">Python (Basic)</span><span class="tool-tag">OneNote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDI SECTION -->
+<section class="section section-white" id="edi">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="edi_pill">Equality, Diversity &amp; Inclusion</div>
+      <h2 class="sec-title" data-i18n="edi_title">EDI Advocacy &amp; Initiatives</h2>
+      <p class="sec-sub" data-i18n="edi_sub">Turning passion for inclusion into meaningful, purpose-driven action</p>
+    </div>
+    <p class="edi-intro reveal" data-i18n="edi_intro">My commitment to Equality, Diversity &amp; Inclusion is both personal and professional. From volunteering at education expos in Pakistan to applying for the EDI Intern role at Arden University, I have consistently worked to create environments where <strong>every individual feels valued, heard, and empowered to grow</strong>.</p>
+
+    <!-- Key EDI activities -->
+    <div class="edi-grid">
+      <div class="edi-card">
+        <span class="edi-card-icon">🎤</span>
+        <div class="edi-card-title" data-i18n="edi1_title">VP Education — Toastmasters International</div>
+        <div class="edi-card-text" data-i18n="edi1_text">As elected Vice President Education, I organised communication workshops, interview skills training, student counselling sessions, and debate competitions — creating a psychologically safe space for people from diverse backgrounds to build confidence and leadership skills.</div>
+      </div>
+      <div class="edi-card">
+        <span class="edi-card-icon">📚</span>
+        <div class="edi-card-title" data-i18n="edi2_title">Educational Outreach &amp; CSR Initiative</div>
+        <div class="edi-card-text" data-i18n="edi2_text">Led end-to-end logistics of supply donation projects as Lead Organiser at Dow University, providing essential academic kits — books, bags, and stationery — to underprivileged students in under-resourced government schools across Pakistan, directly bridging the educational resource gap.</div>
+      </div>
+      <div class="edi-card">
+        <span class="edi-card-icon">🌐</span>
+        <div class="edi-card-title" data-i18n="edi3_title">Global Diversity &amp; Inclusion Conference 2020</div>
+        <div class="edi-card-text" data-i18n="edi3_text">Attended the Global Diversity &amp; Inclusion Benchmarks Conference in 2020, deepening understanding of how inclusive frameworks are designed and implemented at an institutional level — a turning point in channelling professional skills toward structured DEI work.</div>
+      </div>
+      <div class="edi-card">
+        <span class="edi-card-icon">📸</span>
+        <div class="edi-card-title" data-i18n="edi4_title">Education Expo Volunteer — Pakistan 2017</div>
+        <div class="edi-card-text" data-i18n="edi4_text">Volunteered as a photographer at an education expo helping students discover university pathways and academic opportunities. Witnessing the transformative power of access to information became the initial inspiration for a career committed to inclusion.</div>
+      </div>
+      <div class="edi-card">
+        <span class="edi-card-icon">♿</span>
+        <div class="edi-card-title" data-i18n="edi5_title">Personal Accessibility Advocacy</div>
+        <div class="edi-card-text" data-i18n="edi5_text">First-hand experience supporting a deaf and speech-impaired family member has given me a deep, personal understanding of accessibility barriers. This drives my commitment to ensuring events and initiatives are truly inclusive — not just on paper, but in practice.</div>
+      </div>
+      <div class="edi-card">
+        <span class="edi-card-icon">🎓</span>
+        <div class="edi-card-title" data-i18n="edi6_title">Arden University EDI Intern Application</div>
+        <div class="edi-card-text" data-i18n="edi6_text">Applied for the EDI Events &amp; Initiatives Intern role at Arden University, proposing a vision of leading inclusive impact through purpose-driven social initiatives and active student engagement — leveraging compliance expertise and governance skills to bridge DEI awareness with institutional policy.</div>
+      </div>
+    </div>
+
+    <!-- EDI Timeline -->
+    <div class="section-header reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.5rem;font-weight:800;color:var(--secondary);" data-i18n="edi_tl_title">EDI Journey Timeline</h3>
+    </div>
+    <div class="edi-timeline">
+      <div class="edi-tl-item">
+        <div class="edi-tl-year"><div class="yr">2017</div><div class="yr-line"></div></div>
+        <div class="edi-tl-body"><h4 data-i18n="etl1h">📸 Education Expo Volunteer, Karachi</h4><p data-i18n="etl1p">Volunteered as photographer at a student education expo, witnessing how well-organised, inclusive events can open doors and change life trajectories for young people.</p></div>
+      </div>
+      <div class="edi-tl-item">
+        <div class="edi-tl-year"><div class="yr">2018</div><div class="yr-line"></div></div>
+        <div class="edi-tl-body"><h4 data-i18n="etl2h">📋 CSR Lead Organiser — Dow University</h4><p data-i18n="etl2p">Led educational outreach and resource distribution initiative, providing academic kits to underprivileged students in government schools — a foundational highlight in social responsibility.</p></div>
+      </div>
+      <div class="edi-tl-item">
+        <div class="edi-tl-year"><div class="yr">2020</div><div class="yr-line"></div></div>
+        <div class="edi-tl-body"><h4 data-i18n="etl3h">🌐 Global Diversity &amp; Inclusion Conference</h4><p data-i18n="etl3p">Attended the Global D&amp;I Benchmarks Conference, gaining deep insight into how diverse voices drive meaningful institutional change and embedding this perspective into all future work.</p></div>
+      </div>
+      <div class="edi-tl-item">
+        <div class="edi-tl-year"><div class="yr">2021</div><div class="yr-line"></div></div>
+        <div class="edi-tl-body"><h4 data-i18n="etl4h">🎤 VP Education — Toastmasters International</h4><p data-i18n="etl4p">Elected Vice President Education; designed and led inclusive communication workshops, mentoring sessions, and engagement activities for individuals from diverse backgrounds.</p></div>
+      </div>
+      <div class="edi-tl-item">
+        <div class="edi-tl-year"><div class="yr">2026</div><div class="yr-line"></div></div>
+        <div class="edi-tl-body"><h4 data-i18n="etl5h">🎓 EDI Intern Application — Arden University Berlin</h4><p data-i18n="etl5p">Applied for the EDI Events &amp; Initiatives Intern role at Arden University, formalising commitment to embedding inclusive practices within higher education institutions at a strategic level.</p></div>
+      </div>
+    </div>
+
+    <!-- Why EDI matters -->
+    <div class="section-header reveal" style="margin-top:3.5rem;">
+      <h3 style="font-size:1.5rem;font-weight:800;color:var(--secondary);" data-i18n="edi_why_title">Why EDI Matters to Me</h3>
+    </div>
+    <div class="edi-why-grid">
+      <div class="edi-why-card"><span class="wi">❤️</span><h4 data-i18n="ew1h">Personal Insight</h4><p data-i18n="ew1p">First-hand experience supporting a family member with communication barriers gives me authentic understanding of accessibility challenges that others may overlook.</p></div>
+      <div class="edi-why-card"><span class="wi">🧭</span><h4 data-i18n="ew2h">Inclusive Leadership</h4><p data-i18n="ew2p">Mentored diverse cohorts at Toastmasters and spearheaded inclusive communication strategies, demonstrating that leadership is most powerful when it lifts others.</p></div>
+      <div class="edi-why-card"><span class="wi">📊</span><h4 data-i18n="ew3h">Strategic Alignment</h4><p data-i18n="ew3p">Leveraging analytical and governance skills to bridge the gap between DEI awareness and institutional policy — turning values into measurable, accountable action.</p></div>
+      <div class="edi-why-card"><span class="wi">🌱</span><h4 data-i18n="ew4h">Core Mission</h4><p data-i18n="ew4p">Dedicated to dismantling barriers and fostering environments where marginalised voices are empowered and valued through purpose-driven initiatives and structural change.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEERING -->
+<section class="section section-light" id="volunteering">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="vol_pill">Community Impact</div>
+      <h2 class="sec-title" data-i18n="vol_title">Volunteering Work</h2>
+      <p class="sec-sub" data-i18n="vol_sub">Contributing to communities through leadership, education, and project management</p>
+    </div>
+    <div class="vol-grid">
+      <div class="vol-card">
+        <div class="vol-icon-box">🎤</div>
+        <div class="vol-role" data-i18n="v1_role">Vice President – Education &amp; Communications</div>
+        <div class="vol-org">Toastmasters International</div>
+        <div class="vol-period" data-i18n="v1_period">📅 Mar 2021 – Dec 2022 · Karachi, Pakistan</div>
+        <div class="vol-desc" data-i18n="v1_desc">Planned and delivered structured governance programs for chapter members. Coordinated 20+ events using Agile project management methods. Ran communication workshops, interview skills training, student counselling workshops, and debate competitions — creating an inclusive, supportive environment for people from all backgrounds.</div>
+        <div class="vol-tags">
+          <span class="vol-tag" data-i18n="vtag1">Event Management</span>
+          <span class="vol-tag" data-i18n="vtag2">Mentoring</span>
+          <span class="vol-tag" data-i18n="vtag3">Inclusive Leadership</span>
+          <span class="vol-tag" data-i18n="vtag4">Agile</span>
+        </div>
+      </div>
+      <div class="vol-card">
+        <div class="vol-icon-box">📋</div>
+        <div class="vol-role" data-i18n="v2_role">Project Management Volunteer</div>
+        <div class="vol-org" style="display:flex;align-items:center;gap:10px;"><div class="tl-logo-wrap"><img src="dice-logo.jpg" alt="DICE"/></div>DICE Corporation</div>
+        <div class="vol-period" data-i18n="v2_period">📅 Nov 2017 – Dec 2020 · Karachi, Pakistan</div>
+        <div class="vol-desc" data-i18n="v2_desc">Supported end-to-end delivery of product initiatives over a 3-year engagement. Responsibilities included planning, milestone tracking, resource coordination, and cross-functional stakeholder reporting — building the foundational project management skills that shaped the early stages of a professional career.</div>
+        <div class="vol-tags">
+          <span class="vol-tag" data-i18n="vtag5">Project Planning</span>
+          <span class="vol-tag" data-i18n="vtag6">Stakeholder Reporting</span>
+          <span class="vol-tag" data-i18n="vtag7">Milestone Tracking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="section section-white" id="languages">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="lang_pill">Global Communication</div>
+      <h2 class="sec-title" data-i18n="lang_title">Language Proficiency</h2>
+      <p class="sec-sub" data-i18n="lang_sub">Communicating across cultures fluently in three languages</p>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-flag">🇵🇰</div>
+        <div class="lang-name" data-i18n="l1n">Urdu</div>
+        <div class="lang-lev" data-i18n="l1l">Native Speaker</div>
+        <div class="lang-ring-wrap">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#0a7c84"/><stop offset="100%" style="stop-color:#f0a500"/></linearGradient></defs>
+            <circle class="ring-bg" cx="55" cy="55" r="45"/>
+            <circle class="ring-fg" cx="55" cy="55" r="45" stroke="url(#g1)" data-pct="100"/>
+          </svg>
+          <div class="ring-label">C2</div>
+        </div>
+        <div class="lang-sub-grid">
+          <div><div class="lang-sub-key" data-i18n="lsk_sp">Speaking</div><div class="lang-sub-val">Native</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_wr">Writing</div><div class="lang-sub-val">Native</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_rd">Reading</div><div class="lang-sub-val">Native</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_ls">Listening</div><div class="lang-sub-val">Native</div></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇬🇧</div>
+        <div class="lang-name" data-i18n="l2n">English</div>
+        <div class="lang-lev" data-i18n="l2l">C1 – Professional Proficiency</div>
+        <div class="lang-ring-wrap">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <circle class="ring-bg" cx="55" cy="55" r="45"/>
+            <circle class="ring-fg" cx="55" cy="55" r="45" stroke="url(#g1)" data-pct="88"/>
+          </svg>
+          <div class="ring-label">C1</div>
+        </div>
+        <div class="lang-sub-grid">
+          <div><div class="lang-sub-key" data-i18n="lsk_ls">Listening</div><div class="lang-sub-val">C2</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_rd">Reading</div><div class="lang-sub-val">C1</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_sp">Speaking</div><div class="lang-sub-val">C2</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_wr">Writing</div><div class="lang-sub-val">C2</div></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇩🇪</div>
+        <div class="lang-name" data-i18n="l3n">German</div>
+        <div class="lang-lev" data-i18n="l3l">B2 – Professional Working</div>
+        <div class="lang-ring-wrap">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <circle class="ring-bg" cx="55" cy="55" r="45"/>
+            <circle class="ring-fg" cx="55" cy="55" r="45" stroke="url(#g1)" data-pct="67"/>
+          </svg>
+          <div class="ring-label">B2</div>
+        </div>
+        <div class="lang-sub-grid">
+          <div><div class="lang-sub-key" data-i18n="lsk_ls">Listening</div><div class="lang-sub-val">B1</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_rd">Reading</div><div class="lang-sub-val">B2</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_sp">Speaking</div><div class="lang-sub-val">B2</div></div>
+          <div><div class="lang-sub-key" data-i18n="lsk_wr">Writing</div><div class="lang-sub-val">C1</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES -->
+<section class="section section-light" id="hobbies">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="pill" data-i18n="hob_pill">Personal Interests</div>
+      <h2 class="sec-title" data-i18n="hob_title">Hobbies &amp; Interests</h2>
+      <p class="sec-sub" data-i18n="hob_sub">Beyond the professional — the passions that drive and inspire me</p>
+    </div>
+    <div class="hobbies-grid" id="hobbiesGrid">
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🎤</span><div class="h-name" data-i18n="hb1" data-editable>Public Speaking</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">📚</span><div class="h-name" data-i18n="hb2" data-editable>Reading &amp; Research</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🌍</span><div class="h-name" data-i18n="hb3" data-editable>Travelling</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">⚽</span><div class="h-name" data-i18n="hb4" data-editable>Sports &amp; Fitness</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">💻</span><div class="h-name" data-i18n="hb5" data-editable>Tech &amp; Innovation</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🧩</span><div class="h-name" data-i18n="hb6" data-editable>Problem Solving</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🌱</span><div class="h-name" data-i18n="hb7" data-editable>Personal Growth</div></div>
+      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🎯</span><div class="h-name" data-i18n="hb8" data-editable>Strategic Planning</div></div>
+    </div>
+    <div class="gallery-controls reveal">
+      <label for="photoUpload" class="btn btn-glass">📸 Add hobby photo</label>
+      <button type="button" class="btn btn-glass" id="clearHeroPhotos">Clear Gallery</button>
+    </div>
+    <div class="gallery-preview reveal" id="galleryPreview"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="pill" style="background:rgba(255,255,255,.2);" data-i18n="cta_pill">Let's Connect</div>
+    <h2 data-i18n="cta_title">Ready to Collaborate?</h2>
+    <p data-i18n="cta_text">Whether you're looking for a compliance expert, project manager, or a passionate EDI advocate — I'd love to connect and explore opportunities together.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:mm.wali.baig@gmail.com" class="btn btn-gold" data-i18n="cta_btn1">✉️ Send an Email</a>
+      <a href="https://www.linkedin.com/in/mwalibaig01/" target="_blank" class="btn btn-glass" data-i18n="cta_btn2">🔗 View LinkedIn</a>
+      <a href="tel:+4917625047311" class="btn btn-glass" data-i18n="cta_btn3">📞 Call Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Wali Baig</div>
+  <div class="footer-sub" data-i18n="footer_sub">Compliance &amp; Regulatory Affairs Professional · MSc Project Management (Distinction) · Berlin, Germany</div>
+  <div class="social-row">
+    <a href="https://www.linkedin.com/in/mwalibaig01/" class="soc-btn" target="_blank">in</a>
+    <a href="mailto:mm.wali.baig@gmail.com" class="soc-btn">✉</a>
+    <a href="tel:+4917625047311" class="soc-btn">📞</a>
+  </div>
+  <small>© 2026 Wali Baig · Berlin, Germany · mm.wali.baig@gmail.com</small>
+</footer>
+
+<script>
+// ── TRANSLATIONS ──────────────────────────────────────────────────
+const T = {
+  en: {
+    nav_about:"About", nav_exp:"Experience", nav_edu:"Education", nav_skills:"Skills",
+    nav_edi:"EDI", nav_vol:"Volunteering", nav_lang:"Languages", nav_hobbies:"Hobbies", nav_contact:"Contact",
+    hero_tag:"🏙️ Berlin, Germany · Open to Opportunities",
+    hero_sub:"Compliance & Regulatory Affairs Professional<br>MSc Project Management · Distinction · Lean Six Sigma Green Belt",
+    hero_m1:"DM Clinical Research (Remote, USA)", hero_m2:"Arden University Berlin — Class of 2026", hero_m3:"5+ Years Experience",
+    b1:"🛡️ Regulatory Compliance", b2:"📊 Power BI", b3:"⚙️ Lean Six Sigma", b4:"📋 PMO Governance", b5:"🌍 EDI Advocate",
+    cta_email:"✉️ Get in Touch", cta_li:"🔗 LinkedIn Profile",
+    fc1:"Yrs Experience", fc2:"Compliance Rate", fc3:"Efficiency Gain", fc4:"Languages",
+    about_pill:"Professional Summary", about_title:"About Me",
+    about_sub:"Detail-driven professional bridging compliance, governance, and inclusive leadership",
+    about_p1:"I am a <strong>Compliance &amp; Regulatory Affairs Professional</strong> with over 5 years of experience spanning financial compliance, PMO governance in clinical research, quality assurance, and regulatory reporting in IT-intensive environments.",
+    about_p2:"My expertise lies in building robust compliance frameworks that bridge regulatory requirements with operational efficiency. From designing <strong>Compliance Monitoring Plans (CMPs)</strong> to automating provider performance dashboards using <strong>Power BI and Looker</strong>, I transform complex regulatory landscapes into actionable governance structures.",
+    about_p3:"I graduated with <strong>Distinction</strong> from my <strong>MSc in Project Management</strong> at Arden University, Berlin Campus (Class of 2026). I am a <strong>Certified Lean Six Sigma Green Belt</strong> and a passionate <strong>EDI advocate</strong>, committed to creating inclusive environments where every voice is heard and valued.",
+    cc1h:"🛡️ Regulatory Compliance", cc1p:"Risk Assessments, Thematic Reviews, Control Testing, Policy Development",
+    cc2h:"📋 Governance & Reporting", cc2p:"Board Reporting, KPI Dashboards (Power BI), Compliance Monitoring Plans",
+    cc3h:"⚙️ Process Improvement", cc3p:"Lean Six Sigma Green Belt, Root Cause Analysis, Defect Lifecycle Management",
+    cc4h:"🌍 EDI Leadership", cc4p:"Inclusive Event Design, Student Engagement, Community Outreach, DEI Advocacy",
+    contact_h:"📬 Contact Information", contact_addr:"Mollstrasse 19, 10249, Berlin, Germany",
+    contact_permit:"Pakistani · Work Permit: Germany", contact_dob:"25 November 1997 · Karachi, Pakistan",
+    exp_pill:"Career Journey", exp_title:"Professional Experience", exp_sub:"5+ years building expertise across compliance, governance, and quality assurance",
+    e1_title:"Compliance & PMO Administrator", e1_period:"🟢 Apr 2022 – Jun 2025", e1_loc:"📍 Houston, TX, USA (Remote)",
+    e1_ctx:"Financial services-adjacent compliance and project governance role supporting regulatory adherence, provider oversight, and reporting across Finance, Risk, and IT functions.",
+    e1_b1:"Designed and maintained a <strong>Compliance Monitoring Plan (CMP)</strong> framework; performed regular control testing, documented findings, and escalated deficiencies to Senior Management",
+    e1_b2:"Developed and automated provider performance dashboards using <strong>Power BI and Looker</strong>, reducing manual reporting effort by <strong>25%</strong>",
+    e1_b3:"Conducted compliance risk assessments, thematic reviews, and gap analyses with remediation action plans and deadline tracking",
+    e1_b4:"Prepared KPI summaries, breach registers, and regulatory update briefings for Board of Directors and Senior Management",
+    e1_b5:"Applied <strong>Lean Six Sigma</strong> methodology to identify process gaps; improvements increased reporting accuracy and reduced AR outstanding by <strong>30%</strong>",
+    e1_b6:"Coordinated internal and external audits; managed audit documentation packages and ensured timely evidence submission",
+    e3_title:"Kitchen Support Staff (Werkstudent)", e3_period:"🟢 Oct 2025 – Present", e3_loc:"📍 Berlin, Germany",
+    e3_ctx:"Supporting cafeteria operations while finalising MSc studies at Arden University Berlin Campus and integrating into the German professional environment.",
+    e3_b1:"Managed food preparation and cafeteria operations during peak hours in compliance with <strong>HACCP standards</strong>",
+    e3_b2:"Operated computer-based ordering systems and handled interdepartmental email communication in German and English",
+    e3_b3:"Demonstrated cross-cultural bilingual proficiency collaborating daily with a multilingual kitchen team",
+    e2_title:"Software QA & Compliance Analyst (Intern)", e2_period:"Jan 2021 – Mar 2022", e2_loc:"📍 Islamabad, Pakistan",
+    e2_ctx:"Regulatory compliance and quality assurance role within a regulated Fintech environment, supporting financial services product delivery against compliance and operational standards.",
+    e2_b1:"Ensured the <strong>Zindigi Mobile Banking</strong> application met regulatory requirements through structured testing of customer and agent transaction flows",
+    e2_b2:"Designed and executed compliance-oriented test plans covering regulatory requirements, functional controls, and data integrity across multiple device categories",
+    e2_b3:"Maintained a full defect lifecycle tracking register and collaborated with development teams in <strong>Agile sprints</strong> to validate corrections",
+    edu_pill:"Academic Background", edu_title:"Education", edu_sub:"Building a strong foundation in project management, business, and healthcare administration",
+    edu1_tag:"🎓 Postgraduate · Completed", edu1_deg:"MSc Project Management", edu1_period:"📅 Graduated May 2026 · Berlin, Germany",
+    edu1_r1a:"Classification", edu1_r1b:"Distinction", edu1_r2a:"Campus", edu1_r2b:"Berlin, Germany",
+    edu_mods:"Key Modules:", edu1_m1:"Project Analytics & Management Methods", edu1_m2:"Agile Methods in Digital Business", edu1_m3:"Cloud-Based Business Solutions",
+    edu2_tag:"🎓 Undergraduate · Completed", edu2_deg:"Bachelor of Business Administration (BBA)", edu2_period:"📅 Oct 2017 – Dec 2022 · Karachi, Pakistan",
+    edu2_r1a:"Classification", edu2_r1b:"Distinction", edu2_m1:"IT in Business", edu2_m2:"Operations Management", edu2_m3:"Business Communications", edu2_m4:"Digital Marketing",
+    cert_pill:"Professional Development", cert_title:"Certifications",
+    c1n:"Certified Lean Six Sigma Green Belt", c1d:"Process control, root cause analysis, and compliance workflow optimisation",
+    c2n:"Biosafety & Safety in Health Institutions", c2d:"Regulatory safety standards in a licensed institutional environment",
+    c3n:"Toastmasters Leadership Certificate", c3d:"Public speaking, structured communication, and inclusive leadership",
+    skills_pill:"Expertise", skills_title:"Skills & Competencies", skills_sub:"A diverse technical and professional skill set built across multiple industries and regions",
+    sk1_title:"Compliance & Regulatory", sk1_1:"Compliance Risk Assessments", sk1_2:"Control Testing & Monitoring", sk1_3:"Policy & Procedure Development", sk1_4:"Internal & External Audit Support",
+    sk2_title:"Governance & Reporting", sk2_1:"Board & Senior Mgmt Reporting", sk2_2:"Power BI Dashboard Development", sk2_3:"KPI Development & Tracking", sk2_4:"PMO Governance",
+    sk3_title:"Process Improvement", sk3_1:"Lean Six Sigma (Green Belt)", sk3_2:"Root Cause Analysis", sk3_3:"Defect & Issue Lifecycle Mgmt", sk3_4:"Agile / Scrum",
+    sk4_title:"Tools & Technology",
+    edi_pill:"Equality, Diversity & Inclusion", edi_title:"EDI Advocacy & Initiatives", edi_sub:"Turning passion for inclusion into meaningful, purpose-driven action",
+    edi_intro:"My commitment to Equality, Diversity & Inclusion is both personal and professional. From volunteering at education expos in Pakistan to applying for the EDI Intern role at Arden University, I have consistently worked to create environments where <strong>every individual feels valued, heard, and empowered to grow</strong>.",
+    edi1_title:"VP Education — Toastmasters International", edi1_text:"As elected Vice President Education, I organised communication workshops, interview skills training, student counselling sessions, and debate competitions — creating a psychologically safe space for people from diverse backgrounds to build confidence and leadership skills.",
+    edi2_title:"Educational Outreach & CSR Initiative", edi2_text:"Led end-to-end logistics of supply donation projects as Lead Organiser at Dow University, providing essential academic kits to underprivileged students in under-resourced government schools across Pakistan, directly bridging the educational resource gap.",
+    edi3_title:"Global Diversity & Inclusion Conference 2020", edi3_text:"Attended the Global Diversity & Inclusion Benchmarks Conference in 2020, deepening understanding of how inclusive frameworks are designed and implemented at an institutional level.",
+    edi4_title:"Education Expo Volunteer — Pakistan 2017", edi4_text:"Volunteered as a photographer at an education expo helping students discover university pathways — witnessing the transformative power of access to information became the initial inspiration for a career committed to inclusion.",
+    edi5_title:"Personal Accessibility Advocacy", edi5_text:"First-hand experience supporting a deaf and speech-impaired family member has given me deep personal understanding of accessibility barriers, driving my commitment to ensuring events and initiatives are truly inclusive in practice.",
+    edi6_title:"Arden University EDI Intern Application", edi6_text:"Applied for the EDI Events & Initiatives Intern role at Arden University, proposing a vision of leading inclusive impact through purpose-driven social initiatives and active student engagement.",
+    edi_tl_title:"EDI Journey Timeline",
+    etl1h:"📸 Education Expo Volunteer, Karachi", etl1p:"Volunteered as photographer at a student education expo, witnessing how well-organised, inclusive events can open doors and change life trajectories for young people.",
+    etl2h:"📋 CSR Lead Organiser — Dow University", etl2p:"Led educational outreach and resource distribution initiative, providing academic kits to underprivileged students in government schools.",
+    etl3h:"🌐 Global Diversity & Inclusion Conference", etl3p:"Attended the Global D&I Benchmarks Conference, gaining deep insight into how diverse voices drive meaningful institutional change.",
+    etl4h:"🎤 VP Education — Toastmasters International", etl4p:"Elected Vice President Education; designed and led inclusive communication workshops, mentoring sessions, and engagement activities for individuals from diverse backgrounds.",
+    etl5h:"🎓 EDI Intern Application — Arden University Berlin", etl5p:"Applied for the EDI Events & Initiatives Intern role at Arden University, formalising commitment to embedding inclusive practices within higher education at a strategic level.",
+    edi_why_title:"Why EDI Matters to Me",
+    ew1h:"Personal Insight", ew1p:"First-hand experience supporting a family member with communication barriers gives me authentic understanding of accessibility challenges that others may overlook.",
+    ew2h:"Inclusive Leadership", ew2p:"Mentored diverse cohorts at Toastmasters and spearheaded inclusive communication strategies, demonstrating that leadership is most powerful when it lifts others.",
+    ew3h:"Strategic Alignment", ew3p:"Leveraging analytical and governance skills to bridge the gap between DEI awareness and institutional policy — turning values into measurable, accountable action.",
+    ew4h:"Core Mission", ew4p:"Dedicated to dismantling barriers and fostering environments where marginalised voices are empowered and valued through purpose-driven initiatives.",
+    vol_pill:"Community Impact", vol_title:"Volunteering Work", vol_sub:"Contributing to communities through leadership, education, and project management",
+    v1_role:"Vice President – Education & Communications", v1_period:"📅 Mar 2021 – Dec 2022 · Karachi, Pakistan",
+    v1_desc:"Planned and delivered structured governance programs for chapter members. Coordinated 20+ events using Agile project management methods. Ran communication workshops, interview skills training, student counselling workshops, and debate competitions — creating an inclusive, supportive environment.",
+    vtag1:"Event Management", vtag2:"Mentoring", vtag3:"Inclusive Leadership", vtag4:"Agile",
+    v2_role:"Project Management Volunteer", v2_period:"📅 Nov 2017 – Dec 2020 · Karachi, Pakistan",
+    v2_desc:"Supported end-to-end delivery of product initiatives over a 3-year engagement. Responsibilities included planning, milestone tracking, resource coordination, and cross-functional stakeholder reporting.",
+    vtag5:"Project Planning", vtag6:"Stakeholder Reporting", vtag7:"Milestone Tracking",
+    lang_pill:"Global Communication", lang_title:"Language Proficiency", lang_sub:"Communicating across cultures fluently in three languages",
+    l1n:"Urdu", l1l:"Native Speaker", l2n:"English", l2l:"C1 – Professional Proficiency", l3n:"German", l3l:"B2 – Professional Working",
+    lsk_sp:"Speaking", lsk_wr:"Writing", lsk_rd:"Reading", lsk_ls:"Listening",
+    hob_pill:"Personal Interests", hob_title:"Hobbies & Interests", hob_sub:"Beyond the professional — the passions that drive and inspire me",
+    hb1:"Public Speaking", hb2:"Reading & Research", hb3:"Travelling", hb4:"Sports & Fitness", hb5:"Tech & Innovation", hb6:"Problem Solving", hb7:"Personal Growth", hb8:"Strategic Planning",
+    cta_pill:"Let's Connect", cta_title:"Ready to Collaborate?",
+    cta_text:"Whether you're looking for a compliance expert, project manager, or a passionate EDI advocate — I'd love to connect and explore opportunities together.",
+    cta_btn1:"✉️ Send an Email", cta_btn2:"🔗 View LinkedIn", cta_btn3:"📞 Call Me",
+    footer_sub:"Compliance & Regulatory Affairs Professional · MSc Project Management (Distinction) · Berlin, Germany"
+  },
+  de: {
+    nav_about:"Über mich", nav_exp:"Erfahrung", nav_edu:"Bildung", nav_skills:"Fähigkeiten",
+    nav_edi:"EDI", nav_vol:"Ehrenamt", nav_lang:"Sprachen", nav_hobbies:"Hobbys", nav_contact:"Kontakt",
+    hero_tag:"🏙️ Berlin, Deutschland · Offen für Möglichkeiten",
+    hero_sub:"Compliance &amp; Regulierungsexperte<br>MSc Projektmanagement · Auszeichnung · Lean Six Sigma Green Belt",
+    hero_m1:"DM Clinical Research (Remote, USA)", hero_m2:"Arden University Berlin — Abschluss 2026", hero_m3:"5+ Jahre Erfahrung",
+    b1:"🛡️ Regulierungs-Compliance", b2:"📊 Power BI", b3:"⚙️ Lean Six Sigma", b4:"📋 PMO Governance", b5:"🌍 EDI-Befürworter",
+    cta_email:"✉️ Kontakt aufnehmen", cta_li:"🔗 LinkedIn-Profil",
+    fc1:"Jahre Erfahrung", fc2:"Compliance-Rate", fc3:"Effizienzgewinn", fc4:"Sprachen",
+    about_pill:"Berufliche Zusammenfassung", about_title:"Über mich",
+    about_sub:"Detailorientierter Fachmann, der Compliance, Governance und integrative Führung verbindet",
+    about_p1:"Ich bin ein <strong>Compliance- und Regulierungsexperte</strong> mit über 5 Jahren Erfahrung in den Bereichen finanzielle Compliance, PMO-Governance in der klinischen Forschung, Qualitätssicherung und regulatorisches Reporting in IT-intensiven Umgebungen.",
+    about_p2:"Meine Expertise liegt im Aufbau robuster Compliance-Frameworks, die regulatorische Anforderungen mit betrieblicher Effizienz verbinden. Von der Gestaltung von <strong>Compliance-Überwachungsplänen (CMPs)</strong> bis zur Automatisierung von Dashboards mit <strong>Power BI und Looker</strong> transformiere ich komplexe regulatorische Landschaften in umsetzbare Governance-Strukturen.",
+    about_p3:"Ich schloss meinen <strong>MSc in Projektmanagement</strong> mit <strong>Auszeichnung</strong> an der Arden University, Berlin Campus (Abschlussjahrgang 2026) ab. Ich bin <strong>zertifizierter Lean Six Sigma Green Belt</strong> und leidenschaftlicher <strong>EDI-Befürworter</strong>.",
+    cc1h:"🛡️ Regulierungs-Compliance", cc1p:"Risikobewertungen, Thematische Überprüfungen, Kontrolltests, Richtlinienentwicklung",
+    cc2h:"📋 Governance &amp; Reporting", cc2p:"Vorstandsberichte, KPI-Dashboards (Power BI), Compliance-Überwachungspläne",
+    cc3h:"⚙️ Prozessverbesserung", cc3p:"Lean Six Sigma Green Belt, Ursachenanalyse, Defekt-Lifecycle-Management",
+    cc4h:"🌍 EDI-Führung", cc4p:"Inklusive Veranstaltungsgestaltung, Studentenengagement, Gemeinschaftsarbeit, DEI-Befürwortung",
+    contact_h:"📬 Kontaktinformationen", contact_addr:"Mollstrasse 19, 10249, Berlin, Deutschland",
+    contact_permit:"Pakistanisch · Arbeitserlaubnis: Deutschland", contact_dob:"25. November 1997 · Karachi, Pakistan",
+    exp_pill:"Berufsweg", exp_title:"Berufserfahrung", exp_sub:"5+ Jahre Aufbau von Expertise in Compliance, Governance und Qualitätssicherung",
+    e1_title:"Compliance &amp; PMO-Administrator", e1_period:"🟢 Apr. 2022 – Jun. 2025", e1_loc:"📍 Houston, TX, USA (Remote)",
+    e1_ctx:"Compliance- und Projektgovernance-Rolle zur Unterstützung der Einhaltung von Vorschriften, der Anbieterüberwachung und des Reportings in den Bereichen Finanzen, Risiko und IT.",
+    e1_b1:"Entwicklung und Pflege eines <strong>Compliance-Überwachungsplan (CMP)</strong>-Frameworks; regelmäßige Kontrolltests, Dokumentation von Befunden und Eskalation an das Senior Management",
+    e1_b2:"Entwicklung und Automatisierung von Anbieter-Performance-Dashboards mit <strong>Power BI und Looker</strong>, was den manuellen Berichtsaufwand um <strong>25%</strong> reduzierte",
+    e1_b3:"Durchführung von Compliance-Risikobewertungen, thematischen Überprüfungen und Lückenanalysen mit Sanierungsaktionsplänen",
+    e1_b4:"Erstellung von KPI-Zusammenfassungen, Verstoßregistern und regulatorischen Update-Briefings für den Vorstand",
+    e1_b5:"Anwendung der <strong>Lean Six Sigma</strong>-Methodik zur Identifizierung von Prozesslücken; Verbesserungen erhöhten die Reporting-Genauigkeit und reduzierten die ausstehenden Forderungen um <strong>30%</strong>",
+    e1_b6:"Koordinierung interner und externer Audits; Verwaltung von Audit-Dokumentationspaketen und rechtzeitige Vorlage von Nachweisen",
+    e3_title:"Küchenhilfe (Werkstudent)", e3_period:"🟢 Okt. 2025 – Heute", e3_loc:"📍 Berlin, Deutschland",
+    e3_ctx:"Unterstützung des Cafeteriabetriebs während des MSc-Studiums an der Arden University Berlin Campus und Integration in das deutsche Berufsumfeld.",
+    e3_b1:"Verwaltung der Essenszubereitung und des Cafeteriabetriebs in Stoßzeiten gemäß <strong>HACCP-Standards</strong>",
+    e3_b2:"Bedienung computergestützter Bestellsysteme und Bearbeitung abteilungsübergreifender E-Mail-Kommunikation auf Deutsch und Englisch",
+    e3_b3:"Demonstration interkultureller zweisprachiger Kompetenz durch tägliche Zusammenarbeit mit einem mehrsprachigen Küchenteam",
+    e2_title:"Software-QA &amp; Compliance-Analyst (Praktikum)", e2_period:"Jan. 2021 – März 2022", e2_loc:"📍 Islamabad, Pakistan",
+    e2_ctx:"Regulatorische Compliance und Qualitätssicherungsrolle in einem regulierten Fintech-Umfeld, unterstützt die Lieferung von Finanzdienstleistungsprodukten gemäß Compliance- und Betriebsstandards.",
+    e2_b1:"Sicherstellung, dass die <strong>Zindigi Mobile Banking</strong>-Anwendung regulatorische Anforderungen erfüllt durch strukturiertes Testen von Transaktionsflüssen",
+    e2_b2:"Entwicklung und Durchführung von Compliance-orientierten Testplänen für regulatorische Anforderungen, funktionale Kontrollen und Datenintegrität",
+    e2_b3:"Pflege eines vollständigen Defekt-Lifecycle-Tracking-Registers und Zusammenarbeit mit Entwicklungsteams in <strong>Agile Sprints</strong>",
+    edu_pill:"Akademischer Hintergrund", edu_title:"Bildung", edu_sub:"Aufbau einer starken Grundlage in Projektmanagement, Betriebswirtschaft und Gesundheitsmanagement",
+    edu1_tag:"🎓 Postgraduiert · Abgeschlossen", edu1_deg:"MSc Projektmanagement", edu1_period:"📅 Abschluss Mai 2026 · Berlin, Deutschland",
+    edu1_r1a:"Auszeichnung", edu1_r1b:"Distinction", edu1_r2a:"Campus", edu1_r2b:"Berlin, Deutschland",
+    edu_mods:"Schlüsselmodule:", edu1_m1:"Projektanalyse &amp; Managementmethoden", edu1_m2:"Agile Methoden im digitalen Business", edu1_m3:"Cloud-basierte Geschäftslösungen",
+    edu2_tag:"🎓 Bachelor · Abgeschlossen", edu2_deg:"Bachelor of Business Administration (BBA)", edu2_period:"📅 Okt. 2017 – Dez. 2022 · Karachi, Pakistan",
+    edu2_r1a:"Auszeichnung", edu2_r1b:"Distinction", edu2_m1:"IT im Unternehmen", edu2_m2:"Betriebsmanagement", edu2_m3:"Geschäftskommunikation", edu2_m4:"Digitales Marketing",
+    cert_pill:"Berufliche Weiterentwicklung", cert_title:"Zertifikate",
+    c1n:"Zertifizierter Lean Six Sigma Green Belt", c1d:"Prozesskontrolle, Ursachenanalyse und Compliance-Workflow-Optimierung",
+    c2n:"Biosicherheit &amp; Sicherheit in Gesundheitseinrichtungen", c2d:"Regulatorische Sicherheitsstandards in einer lizenzierten institutionellen Umgebung",
+    c3n:"Toastmasters Führungszertifikat", c3d:"Öffentliches Reden, strukturierte Kommunikation und inklusive Führung",
+    skills_pill:"Fachkenntnisse", skills_title:"Fähigkeiten &amp; Kompetenzen", skills_sub:"Ein vielfältiges technisches und berufliches Kompetenzprofil aus mehreren Branchen und Regionen",
+    sk1_title:"Compliance &amp; Regulierung", sk1_1:"Compliance-Risikobewertungen", sk1_2:"Kontrolltests &amp; Überwachung", sk1_3:"Richtlinien- &amp; Verfahrensentwicklung", sk1_4:"Interne &amp; externe Prüfungsunterstützung",
+    sk2_title:"Governance &amp; Reporting", sk2_1:"Vorstand &amp; Senior-Mgmt-Reporting", sk2_2:"Power BI Dashboard-Entwicklung", sk2_3:"KPI-Entwicklung &amp; Tracking", sk2_4:"PMO-Governance",
+    sk3_title:"Prozessverbesserung", sk3_1:"Lean Six Sigma (Green Belt)", sk3_2:"Ursachenanalyse", sk3_3:"Defekt &amp; Problem-Lifecycle-Mgmt", sk3_4:"Agile / Scrum",
+    sk4_title:"Tools &amp; Technologie",
+    edi_pill:"Gleichstellung, Vielfalt &amp; Inklusion", edi_title:"EDI-Arbeit &amp; Initiativen", edi_sub:"Leidenschaft für Inklusion in bedeutungsvolle, zweckorientierte Maßnahmen umwandeln",
+    edi_intro:"Mein Engagement für Gleichstellung, Vielfalt und Inklusion ist sowohl persönlich als auch beruflich. Von der Freiwilligenarbeit bei Bildungsmessen in Pakistan bis zur Bewerbung auf die EDI-Praktikantenstelle an der Arden University habe ich konsequent daran gearbeitet, Umgebungen zu schaffen, in denen <strong>jeder Einzelne wertgeschätzt, gehört und gestärkt wird</strong>.",
+    edi1_title:"VP Bildung — Toastmasters International", edi1_text:"Als gewählter Vizepräsident für Bildung organisierte ich Kommunikationsworkshops, Interviewtraining, Studentenberatungssitzungen und Debattierwettbewerbe — ein psychologisch sicherer Raum für Menschen aus vielfältigen Hintergründen.",
+    edi2_title:"Bildungsarbeit &amp; CSR-Initiative", edi2_text:"Leitung der End-to-End-Logistik von Spendenaktionen an der Dow University, Bereitstellung von Schulmaterialien für benachteiligte Schüler in unterversorgten Schulen in Pakistan.",
+    edi3_title:"Global Diversity &amp; Inclusion Konferenz 2020", edi3_text:"Teilnahme an der Global D&amp;I Benchmarks Konferenz 2020, um zu verstehen, wie inklusive Rahmenbedingungen auf institutioneller Ebene gestaltet und umgesetzt werden.",
+    edi4_title:"Bildungsmesse-Freiwilliger — Pakistan 2017", edi4_text:"Freiwillig als Fotograf bei einer Bildungsmesse tätig, die Schülern hilft, Universitätswege zu entdecken — ein wegweisender Moment für eine Karriere, die sich der Inklusion verschrieben hat.",
+    edi5_title:"Persönliche Barrierefreiheits-Fürsprache", edi5_text:"Die persönliche Erfahrung, ein gehörloses Familienmitglied zu unterstützen, gibt mir ein tiefes Verständnis für Barrierefreiheitshindernisse und treibt mein Engagement für echte Inklusion an.",
+    edi6_title:"EDI-Praktikumsbewerbung — Arden University", edi6_text:"Bewerbung auf die EDI-Praktikantenstelle an der Arden University mit der Vision, inklusiven Einfluss durch zweckorientierte Initiativen und aktives Studentenengagement zu fördern.",
+    edi_tl_title:"EDI-Zeitstrahl",
+    etl1h:"📸 Bildungsmesse-Freiwilliger, Karachi", etl1p:"Freiwillig als Fotograf bei einer Bildungsmesse tätig und erlebt, wie gut organisierte, inklusive Veranstaltungen Türen öffnen und Leben verändern können.",
+    etl2h:"📋 CSR-Hauptorganisator — Dow University", etl2p:"Leitung der Bildungs- und Ressourcenverteilungsinitiative, Bereitstellung von Schulmaterialien für benachteiligte Schüler in Schulen.",
+    etl3h:"🌐 Global Diversity &amp; Inclusion Konferenz", etl3p:"Teilnahme an der Global D&I Benchmarks Konferenz und tiefe Einblicke, wie vielfältige Stimmen bedeutenden institutionellen Wandel vorantreiben.",
+    etl4h:"🎤 VP Bildung — Toastmasters International", etl4p:"Gewählter Vizepräsident für Bildung; Gestaltung und Leitung inklusiver Kommunikationsworkshops und Mentoring-Sitzungen.",
+    etl5h:"🎓 EDI-Praktikumsbewerbung — Arden University Berlin", etl5p:"Bewerbung auf die EDI-Praktikantenstelle und Formalisierung des Engagements für die Einbettung inklusiver Praktiken in die Hochschulbildung.",
+    edi_why_title:"Warum EDI für mich wichtig ist",
+    ew1h:"Persönliche Einsicht", ew1p:"Persönliche Erfahrung bei der Unterstützung eines Familienmitglieds mit Kommunikationsbarrieren gibt mir ein authentisches Verständnis für Barrierefreiheitsprobleme.",
+    ew2h:"Inklusive Führung", ew2p:"Mentoring verschiedener Gruppen bei Toastmasters und Entwicklung inklusiver Kommunikationsstrategien.",
+    ew3h:"Strategische Ausrichtung", ew3p:"Nutzung analytischer und Governance-Fähigkeiten, um die Lücke zwischen DEI-Bewusstsein und institutioneller Politik zu überbrücken.",
+    ew4h:"Kernauftrag", ew4p:"Engagiert für den Abbau von Barrieren und die Förderung von Umgebungen, in denen marginalisierte Stimmen gestärkt und wertgeschätzt werden.",
+    vol_pill:"Gemeinschaftsengagement", vol_title:"Ehrenamtliche Arbeit", vol_sub:"Beiträge zu Gemeinschaften durch Führung, Bildung und Projektmanagement",
+    v1_role:"Vizepräsident – Bildung &amp; Kommunikation", v1_period:"📅 März 2021 – Dez. 2022 · Karachi, Pakistan",
+    v1_desc:"Planung und Durchführung strukturierter Governance-Programme für Clubmitglieder. Koordinierung von 20+ Veranstaltungen mit Agile-Methoden. Durchführung von Kommunikationsworkshops, Interviewtraining und Debattierwettbewerben.",
+    vtag1:"Veranstaltungsmanagement", vtag2:"Mentoring", vtag3:"Inklusive Führung", vtag4:"Agile",
+    v2_role:"Projektmanagement-Freiwilliger", v2_period:"📅 Nov. 2017 – Dez. 2020 · Karachi, Pakistan",
+    v2_desc:"Unterstützung der End-to-End-Lieferung von Produktinitiativen über ein 3-jähriges Engagement. Aufgaben umfassten Planung, Meilensteinverfolgung, Ressourcenkoordination und stakeholderübergreifendes Reporting.",
+    vtag5:"Projektplanung", vtag6:"Stakeholder-Reporting", vtag7:"Meilenstein-Tracking",
+    lang_pill:"Globale Kommunikation", lang_title:"Sprachkenntnisse", lang_sub:"Fließende Kommunikation in drei Sprachen über Kulturen hinweg",
+    l1n:"Urdu", l1l:"Muttersprache", l2n:"Englisch", l2l:"C1 – Berufliche Kompetenz", l3n:"Deutsch", l3l:"B2 – Berufliche Arbeitskenntnisse",
+    lsk_sp:"Sprechen", lsk_wr:"Schreiben", lsk_rd:"Lesen", lsk_ls:"Hören",
+    hob_pill:"Persönliche Interessen", hob_title:"Hobbys &amp; Interessen", hob_sub:"Jenseits des Beruflichen — die Leidenschaften, die mich antreiben und inspirieren",
+    hb1:"Öffentliches Reden", hb2:"Lesen &amp; Recherche", hb3:"Reisen", hb4:"Sport &amp; Fitness", hb5:"Technologie &amp; Innovation", hb6:"Problemlösung", hb7:"Persönliches Wachstum", hb8:"Strategische Planung",
+    cta_pill:"Lass uns vernetzen", cta_title:"Bereit zur Zusammenarbeit?",
+    cta_text:"Ob Sie einen Compliance-Experten, Projektmanager oder leidenschaftlichen EDI-Befürworter suchen — ich würde mich freuen, mich mit Ihnen zu vernetzen und gemeinsam Möglichkeiten zu erkunden.",
+    cta_btn1:"✉️ E-Mail senden", cta_btn2:"🔗 LinkedIn ansehen", cta_btn3:"📞 Anrufen",
+    footer_sub:"Compliance &amp; Regulierungsexperte · MSc Projektmanagement (Auszeichnung) · Berlin, Deutschland"
+  }
+};
+
+// ── Language toggle ────────────────────────────────────────────────
+let currentLang = 'en';
+function setLang(lang) {
+  currentLang = lang;
+  const d = T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (d[key] !== undefined) el.innerHTML = d[key];
+  });
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnDE').classList.toggle('active', lang === 'de');
+  document.documentElement.setAttribute('lang', lang);
+}
+
+// ── Scroll progress ────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+  updateNav();
+});
+
+// ── Active nav ─────────────────────────────────────────────────────
+function updateNav() {
+  const sections = document.querySelectorAll('section[id], .cta-section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  links.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#'+current) a.classList.add('active'); });
+}
+
+// ── Smooth scroll ──────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('nav-links').classList.remove('open');
+  });
+});
+
+// ── Intersection observer ──────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    el.classList.add('vis');
+    el.querySelectorAll('.skill-bar-fill').forEach((f,i) => setTimeout(() => f.style.width = f.dataset.w+'%', i*120));
+    el.querySelectorAll('.ring-fg').forEach(r => {
+      const circ = 2 * Math.PI * 45;
+      setTimeout(() => r.style.strokeDashoffset = circ * (1 - parseFloat(r.dataset.pct)/100), 300);
+    });
+    if (el.classList.contains('skill-section')) {
+      el.querySelectorAll('.skill-row').forEach((row,i) => setTimeout(() => row.classList.add('vis'), i*100));
+      el.querySelectorAll('.tool-tag').forEach((t,i)  => setTimeout(() => t.classList.add('vis'), i*55));
+    }
+    io.unobserve(el);
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal,.tl-item,.edu-card,.cert-card,.vol-card,.lang-card,.hobby-card,.skill-section,.edi-card,.edi-tl-item,.edi-why-card').forEach(el => io.observe(el));
+
+// ── Local page editor and gallery ─────────────────────────────────
+const editBtn = document.getElementById('toggleEditBtn');
+const removeBtn = document.getElementById('toggleRemoveBtn');
+const addHobbyBtn = document.getElementById('addHobbyBtn');
+const addSkillBtn = document.getElementById('addSkillBtn');
+const addSectionBtn = document.getElementById('addSectionBtn');
+const saveBtn = document.getElementById('saveEditsBtn');
+const clearBtn = document.getElementById('clearAllBtn');
+const photoUpload = document.getElementById('photoUpload');
+const galleryPreview = document.getElementById('galleryPreview');
+const heroOrbit = document.getElementById('heroOrbit');
+const hobbiesGrid = document.getElementById('hobbiesGrid');
+const toolsWrap = document.querySelector('.tools-wrap');
+const ctaSection = document.getElementById('contact');
+let editMode = false;
+let removeMode = false;
+let heroPhotos = [];
+let skillTags = [];
+let addedSections = [];
+let removedSectionIds = [];
+
+function setContentEditable(active) {
+  document.querySelectorAll('[data-i18n], [data-editable]').forEach(el => {
+    el.contentEditable = active;
+    el.classList.toggle('editable-on', active);
+    if (active) el.addEventListener('focus', () => el.dataset.original = el.innerHTML);
+  });
+}
+
+function toggleEditMode() {
+  editMode = !editMode;
+  setContentEditable(editMode);
+  editBtn.classList.toggle('active', editMode);
+  editBtn.textContent = editMode ? 'Exit Text Edit' : 'Edit Text';
+  if (editMode) {
+    removeMode = false;
+    removeBtn.classList.remove('active');
+  }
+}
+
+function toggleRemoveMode() {
+  removeMode = !removeMode;
+  removeBtn.classList.toggle('active', removeMode);
+  removeBtn.textContent = removeMode ? 'Remove Mode On' : 'Remove Items';
+  document.querySelectorAll('.remove-item').forEach(btn => {
+    btn.style.display = removeMode ? 'block' : 'none';
+  });
+  document.querySelectorAll('.section-remove').forEach(btn => {
+    btn.style.display = removeMode ? 'block' : 'none';
+  });
+  if (removeMode) {
+    editMode = false;
+    setContentEditable(false);
+    editBtn.classList.remove('active');
+  }
+}
+
+function addHobbyCard() {
+  const hobby = prompt('Enter a new hobby or interest name');
+  if (!hobby) return;
+  const icon = prompt('Optional emoji icon for this hobby (for example 🎨, 🧠, 🎵)', '⭐') || '⭐';
+  const card = document.createElement('div');
+  card.className = 'hobby-card';
+  const key = `hobby-${Date.now()}`;
+  card.innerHTML = `<button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">${icon}</span><div class="h-name" data-editable data-editable-key="${key}">${hobby}</div>`;
+  hobbiesGrid.appendChild(card);
+  attachRemoveListeners();
+  savePageState();
+}
+
+function addSkillTag() {
+  const skill = prompt('Enter a new skill or tool name');
+  if (!skill) return;
+  const key = `skill-${Date.now()}`;
+  const tag = document.createElement('span');
+  tag.className = 'tool-tag';
+  tag.setAttribute('data-editable', '');
+  tag.setAttribute('data-editable-key', key);
+  tag.textContent = skill;
+  toolsWrap.appendChild(tag);
+  skillTags.push({ key, label: skill });
+  saveSkillTags();
+  savePageState();
+}
+
+function addSection() {
+  const title = prompt('Enter the new section title');
+  if (!title) return;
+  const subtitle = prompt('Enter a short description for this section', 'Add a quick description here.') || '';
+  const body = prompt('Enter the section content text', 'Share details for this new section.') || '';
+  const id = `added-section-${Date.now()}`;
+  const section = document.createElement('section');
+  section.className = 'section section-white reveal';
+  section.id = id;
+  section.dataset.added = 'true';
+  section.innerHTML = `
+    <button type="button" class="section-remove" aria-label="Remove section">×</button>
+    <div class="container">
+      <div class="section-header">
+        <div class="pill">Custom Section</div>
+        <h2 class="sec-title" data-editable data-editable-key="section-title-${id}">${title}</h2>
+        <p class="sec-sub" data-editable data-editable-key="section-sub-${id}">${subtitle}</p>
+      </div>
+      <div class="section-body"><p data-editable data-editable-key="section-body-${id}">${body}</p></div>
+    </div>`;
+  ctaSection.parentNode.insertBefore(section, ctaSection);
+  addedSections.push({ id, title, subtitle, body });
+  saveAddedSections();
+  addSectionRemoveButtons();
+  savePageState();
+}
+
+function addSectionRemoveButtons() {
+  document.querySelectorAll('section:not(#hero)').forEach(sec => {
+    if (!sec.querySelector('.section-remove')) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'section-remove';
+      button.setAttribute('aria-label', 'Remove section');
+      button.textContent = '×';
+      button.onclick = () => {
+        sec.style.display = 'none';
+        sec.dataset.removed = 'true';
+        if (sec.id && !removedSectionIds.includes(sec.id)) {
+          removedSectionIds.push(sec.id);
+          saveRemovedSections();
+        }
+      };
+      sec.prepend(button);
+    }
+    const btn = sec.querySelector('.section-remove');
+    if (btn) btn.style.display = removeMode ? 'block' : 'none';
+  });
+}
+
+function saveSkillTags() {
+  localStorage.setItem('skillTags', JSON.stringify(skillTags));
+}
+
+function saveAddedSections() {
+  localStorage.setItem('addedSections', JSON.stringify(addedSections));
+}
+
+function saveRemovedSections() {
+  localStorage.setItem('removedSections', JSON.stringify(removedSectionIds));
+}
+
+function loadSkillTags() {
+  const stored = localStorage.getItem('skillTags');
+  skillTags = stored ? JSON.parse(stored) : [];
+  skillTags.forEach(skill => {
+    if (!toolsWrap.querySelector(`[data-editable-key="${skill.key}"]`)) {
+      const tag = document.createElement('span');
+      tag.className = 'tool-tag';
+      tag.setAttribute('data-editable', '');
+      tag.setAttribute('data-editable-key', skill.key);
+      tag.textContent = skill.label;
+      toolsWrap.appendChild(tag);
+    }
+  });
+}
+
+function loadAddedSections() {
+  const stored = localStorage.getItem('addedSections');
+  addedSections = stored ? JSON.parse(stored) : [];
+  addedSections.forEach(sectionData => {
+    if (!document.getElementById(sectionData.id)) {
+      const section = document.createElement('section');
+      section.className = 'section section-white reveal';
+      section.id = sectionData.id;
+      section.dataset.added = 'true';
+      section.innerHTML = `
+        <button type="button" class="section-remove" aria-label="Remove section">×</button>
+        <div class="container">
+          <div class="section-header">
+            <div class="pill">Custom Section</div>
+            <h2 class="sec-title" data-editable data-editable-key="section-title-${sectionData.id}">${sectionData.title}</h2>
+            <p class="sec-sub" data-editable data-editable-key="section-sub-${sectionData.id}">${sectionData.subtitle}</p>
+          </div>
+          <div class="section-body"><p data-editable data-editable-key="section-body-${sectionData.id}">${sectionData.body}</p></div>
+        </div>`;
+      ctaSection.parentNode.insertBefore(section, ctaSection);
+    }
+  });
+}
+
+function loadRemovedSections() {
+  const stored = localStorage.getItem('removedSections');
+  removedSectionIds = stored ? JSON.parse(stored) : [];
+  removedSectionIds.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec) sec.style.display = 'none';
+  });
+}
+
+function saveCustomState() {
+  saveSkillTags();
+  saveAddedSections();
+  saveRemovedSections();
+}
+
+function attachRemoveListeners() {
+  document.querySelectorAll('.remove-item').forEach(btn => {
+    btn.style.display = removeMode ? 'block' : 'none';
+    btn.onclick = () => {
+      if (!removeMode) return;
+      const card = btn.closest('.hobby-card');
+      card?.remove();
+      savePageState();
+    };
+  });
+}
+
+function loadHeroPhotos() {
+  const stored = localStorage.getItem('heroGalleryPhotos');
+  heroPhotos = stored ? JSON.parse(stored) : [];
+  renderHeroGallery();
+  renderPhotoPreview();
+}
+
+function renderHeroGallery() {
+  const slots = heroOrbit.querySelectorAll('.orbit-item');
+  slots.forEach((slot, idx) => {
+    const img = slot.querySelector('img') || document.createElement('img');
+    if (!slot.querySelector('img')) slot.appendChild(img);
+    img.src = heroPhotos[idx] || img.dataset.default || img.src;
+    img.alt = `Hero photo ${idx + 1}`;
+  });
+}
+
+function renderPhotoPreview() {
+  galleryPreview.innerHTML = '';
+  heroPhotos.forEach((src, idx) => {
+    const image = document.createElement('img');
+    image.src = src;
+    image.alt = `Preview ${idx + 1}`;
+    galleryPreview.appendChild(image);
+  });
+}
+
+function getEditKey(el) {
+  return el.dataset.i18n || el.dataset.editableKey || el.id || `${el.tagName.toLowerCase()}-${Array.from(document.querySelectorAll(el.tagName)).indexOf(el)}`;
+}
+
+function savePageState() {
+  const editable = {};
+  document.querySelectorAll('[data-i18n], [data-editable]').forEach(el => {
+    const key = getEditKey(el);
+    if (key) editable[key] = el.innerHTML;
+  });
+  localStorage.setItem('pageEditorContent', JSON.stringify(editable));
+  localStorage.setItem('heroGalleryPhotos', JSON.stringify(heroPhotos));
+  localStorage.setItem('hobbyCards', JSON.stringify(Array.from(hobbiesGrid.querySelectorAll('.hobby-card')).map(card => ({ icon: card.querySelector('.h-ico')?.textContent || '', title: card.querySelector('.h-name')?.innerHTML || '', key: card.querySelector('.h-name')?.dataset.editableKey || '' }))));
+  saveCustomState();
+}
+
+function restorePageState() {
+  const stored = localStorage.getItem('pageEditorContent');
+  if (stored) {
+    const editable = JSON.parse(stored);
+    document.querySelectorAll('[data-i18n], [data-editable]').forEach(el => {
+      const key = el.dataset.i18n || el.dataset.editableKey || el.dataset.editable || el.textContent.trim().slice(0, 40);
+      if (key && editable[key] !== undefined) el.innerHTML = editable[key];
+    });
+  }
+  const storedHobbies = localStorage.getItem('hobbyCards');
+  if (storedHobbies) {
+    const cards = JSON.parse(storedHobbies);
+    hobbiesGrid.innerHTML = '';
+    cards.forEach(cardData => {
+      const card = document.createElement('div');
+      card.className = 'hobby-card';
+      const key = cardData.key || `hobby-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      card.innerHTML = `<button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">${cardData.icon || '⭐'}</span><div class="h-name" data-editable data-editable-key="${key}">${cardData.title}</div>`;
+      hobbiesGrid.appendChild(card);
+    });
+  }
+  attachRemoveListeners();
+  loadHeroPhotos();
+  loadSkillTags();
+  loadAddedSections();
+  loadRemovedSections();
+  addSectionRemoveButtons();
+}
+
+function clearAllEdits() {
+  if (!confirm('Restore the page to the original defaults?')) return;
+  localStorage.removeItem('pageEditorContent');
+  localStorage.removeItem('heroGalleryPhotos');
+  localStorage.removeItem('hobbyCards');
+  location.reload();
+}
+
+photoUpload.addEventListener('change', e => {
+  const files = Array.from(e.target.files).slice(0, 6);
+  if (!files.length) return;
+  const readers = files.map(file => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  }));
+  Promise.all(readers).then(images => {
+    heroPhotos = images;
+    savePageState();
+    renderHeroGallery();
+    renderPhotoPreview();
+  });
+});
+
+clearBtn.addEventListener('click', clearAllEdits);
+saveBtn.addEventListener('click', savePageState);
+editBtn.addEventListener('click', toggleEditMode);
+removeBtn.addEventListener('click', toggleRemoveMode);
+addHobbyBtn.addEventListener('click', addHobbyCard);
+addSkillBtn.addEventListener('click', addSkillTag);
+addSectionBtn.addEventListener('click', addSection);
+document.getElementById('clearHeroPhotos').addEventListener('click', () => {
+  heroPhotos = [];
+  savePageState();
+  renderHeroGallery();
+  renderPhotoPreview();
+});
+photoUpload.addEventListener('click', e => e.target.value = '');
+
+attachRemoveListeners();
+restorePageState();
+
+window.addEventListener('beforeunload', () => {
+  if (editMode) savePageState();
+});
+</script>
+</body>
+</html>
