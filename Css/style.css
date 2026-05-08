@@ -1,0 +1,25 @@
+/* style.css */
+
+/* Smooth fade animations */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Dark Mode */
+.dark body {
+  background-color: #0f0f0f;
+}
+
+.dark section,
+.dark .card {
+  background-color: #1b1b1b !important;
+  color: #e8e8e8 !important;
+}
+
+.dark img {
+  filter: brightness(0.9);
+}
