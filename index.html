@@ -34,6 +34,26 @@
     .admin-panel.collapsed h4,.admin-panel.collapsed .admin-actions{display:none}
     .admin-panel h4{font-size:.95rem;color:var(--secondary);margin-bottom:.8rem;font-weight:800}
     .admin-actions{display:grid;gap:.65rem}
+    .hidden{display:none !important}
+    .login-overlay{position:fixed;inset:0;background:rgba(13,27,42,.8);display:flex;align-items:center;justify-content:center;padding:1rem;z-index:1200}
+    .login-modal{background:#fff;border-radius:24px;max-width:420px;width:100%;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+    .login-modal h3{margin-bottom:1rem;color:var(--secondary)}
+    .login-modal p{font-size:.95rem;color:var(--text-light);margin-bottom:1.25rem}
+    .login-input{width:100%;padding:12px 14px;border:1px solid rgba(10,124,132,.2);border-radius:14px;margin-bottom:1rem;font-size:1rem}
+    .login-actions{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+    .login-actions button{flex:1 1 45%;min-width:120px}
+    .login-error{color:#c0392b;font-size:.86rem;min-height:1.25rem;margin-bottom:.85rem}
+    .admin-panel.locked .admin-actions button:not(#loginBtn){opacity:.45;cursor:not-allowed}
+    .admin-panel.locked .admin-actions .edit-hint{color:var(--text-light)}
+    .view-overlay{position:fixed;inset:0;background:rgba(9,18,28,.92);display:none;align-items:center;justify-content:center;padding:1rem;z-index:1300}
+    .view-overlay.active{display:flex}
+    .view-modal{background:#07101a;border-radius:24px;max-width:1100px;width:100%;max-height:90vh;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+    .view-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:rgba(255,255,255,.05);color:#fff}
+    .view-header h4{margin:0;font-size:1rem}
+    .view-tag{font-size:.85rem;color:var(--accent)}
+    .view-close{background:transparent;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+    .view-frame{width:100%;height:100%;border:none;background:#000}
+    .view-note{padding:.85rem 1.25rem;color:rgba(255,255,255,.8);background:rgba(255,255,255,.05);font-size:.9rem}
     .admin-toggle{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;border:none;background:var(--primary);color:#fff;font-size:1rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr);box-shadow:0 10px 18px rgba(0,0,0,.18)}
     .admin-panel.collapsed .admin-toggle{position:static;width:100%;height:100%;border-radius:50%;font-size:1.15rem;box-shadow:none}
     .admin-panel button,.admin-panel label{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1rem;border-radius:999px;border:1px solid rgba(10,124,132,.15);background:#fff;color:var(--secondary);font-weight:700;cursor:pointer;transition:var(--tr);font-size:.85rem}
@@ -284,12 +304,42 @@
   <div class="admin-actions">
     <button type="button" id="toggleEditBtn">Edit Text</button>
     <button type="button" id="toggleRemoveBtn">Remove Items</button>
-    <button type="button" id="addHobbyBtn" class="btn btn-glass">+ Add Hobby</button>
     <button type="button" id="addSkillBtn" class="btn btn-glass">+ Add Skill</button>
     <button type="button" id="addSectionBtn" class="btn btn-glass">+ Add Section</button>
     <button type="button" id="saveEditsBtn" class="btn btn-gold">Save Changes</button>
     <button type="button" id="clearAllBtn" class="btn btn-glass">Restore Defaults</button>
+    <button type="button" id="loginBtn" class="btn btn-glass">Login to Edit</button>
     <div class="edit-hint">Use the buttons to update page copy, add/remove content, and store your changes locally.</div>
+  </div>
+</div>
+
+<div class="login-overlay hidden" id="loginOverlay" aria-hidden="true">
+  <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <h3 id="loginTitle">Editor Login</h3>
+    <p>Enter your username and password to unlock editing tools.</p>
+    <form id="loginForm">
+      <input id="editorUsername" class="login-input" type="text" placeholder="Username" aria-label="Username" required minlength="4" />
+      <input id="editorPassword" class="login-input" type="password" placeholder="Password" aria-label="Password" required minlength="4" />
+      <div id="loginError" class="login-error"></div>
+      <div class="login-actions">
+        <button type="submit" class="btn btn-gold">Unlock</button>
+        <button type="button" id="loginCancelBtn" class="btn btn-glass">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="view-overlay" id="viewOverlay" aria-hidden="true">
+  <div class="view-modal" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
+    <div class="view-header">
+      <div>
+        <h4 id="viewTitle">Project Preview</h4>
+        <div class="view-tag">View-only mode · download disabled</div>
+      </div>
+      <button type="button" id="viewCloseBtn" class="view-close" aria-label="Close preview">×</button>
+    </div>
+    <iframe id="viewFrame" class="view-frame" sandbox="allow-same-origin allow-scripts"></iframe>
+    <div class="view-note" id="viewNote">The project is opened in a view-only window. Download controls are hidden when supported by the browser.</div>
   </div>
 </div>
 
@@ -305,7 +355,7 @@
       <li><a href="#edi" data-i18n="nav_edi">EDI</a></li>
       <li><a href="#volunteering" data-i18n="nav_vol">Volunteering</a></li>
       <li><a href="#languages" data-i18n="nav_lang">Languages</a></li>
-      <li><a href="#hobbies" data-i18n="nav_hobbies">Hobbies</a></li>
+      <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
       <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
     </ul>
     <div class="lang-switcher">
@@ -336,6 +386,7 @@
         <span class="hero-badge" data-i18n="b5">🌍 EDI Advocate</span>
       </div>
       <div class="hero-cta">
+        <a href="#projects" class="btn btn-glass">📁 View Projects</a>
         <a href="mailto:mm.wali.baig@gmail.com" class="btn btn-gold" data-i18n="cta_email">✉️ Get in Touch</a>
         <a href="https://www.linkedin.com/in/mwalibaig01/" target="_blank" class="btn btn-glass" data-i18n="cta_li">🔗 LinkedIn Profile</a>
       </div>
@@ -758,23 +809,39 @@
   </div>
 </section>
 
-<!-- HOBBIES -->
-<section class="section section-light" id="hobbies">
+<!-- PROJECTS -->
+<section class="section section-light" id="projects">
   <div class="container">
     <div class="section-header reveal">
-      <div class="pill" data-i18n="hob_pill">Personal Interests</div>
-      <h2 class="sec-title" data-i18n="hob_title">Hobbies &amp; Interests</h2>
-      <p class="sec-sub" data-i18n="hob_sub">Beyond the professional — the passions that drive and inspire me</p>
+      <div class="pill">Projects Portfolio</div>
+      <h2 class="sec-title">Projects</h2>
+      <p class="sec-sub">Key delivery and compliance projects demonstrating strategic leadership, process improvement, and regulatory impact.</p>
     </div>
-    <div class="hobbies-grid" id="hobbiesGrid">
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🎤</span><div class="h-name" data-i18n="hb1" data-editable>Public Speaking</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">📚</span><div class="h-name" data-i18n="hb2" data-editable>Reading &amp; Research</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🌍</span><div class="h-name" data-i18n="hb3" data-editable>Travelling</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">⚽</span><div class="h-name" data-i18n="hb4" data-editable>Sports &amp; Fitness</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">💻</span><div class="h-name" data-i18n="hb5" data-editable>Tech &amp; Innovation</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🧩</span><div class="h-name" data-i18n="hb6" data-editable>Problem Solving</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🌱</span><div class="h-name" data-i18n="hb7" data-editable>Personal Growth</div></div>
-      <div class="hobby-card"><button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">🎯</span><div class="h-name" data-i18n="hb8" data-editable>Strategic Planning</div></div>
+    <div class="vol-grid">
+      <div class="vol-card">
+        <div class="vol-icon-box">📊</div>
+        <h3 class="vol-role">Toyota IoT Project</h3>
+        <p class="vol-desc">A presentation covering the design and implementation of an IoT solution for connected manufacturing insights.</p>
+        <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;">
+          <a href="Toyota IoT Project.pptx.pptx" target="_blank" class="btn btn-glass">Open PPTX</a>
+        </div>
+      </div>
+      <div class="vol-card">
+        <div class="vol-icon-box">📄</div>
+        <h3 class="vol-role">Billing Matrix Standardization</h3>
+        <p class="vol-desc">A PDF document describing the standardisation of billing flows and improved financial reporting controls.</p>
+        <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;">
+          <a href="Billing Matrix Standardization Project.pdf.pdf" target="_blank" class="btn btn-glass">Open PDF</a>
+        </div>
+      </div>
+      <div class="vol-card">
+        <div class="vol-icon-box">📈</div>
+        <h3 class="vol-role">DMCR Financial Dashboard</h3>
+        <p class="vol-desc">A slide deck detailing the creation of a financial dashboard for monitoring compliance and operational KPIs.</p>
+        <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;">
+          <a href="DMCR Financial Dashboard Project.pptx.pptx" target="_blank" class="btn btn-glass">Open PPTX</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -810,7 +877,7 @@
 const T = {
   en: {
     nav_about:"About", nav_exp:"Experience", nav_edu:"Education", nav_skills:"Skills",
-    nav_edi:"EDI", nav_vol:"Volunteering", nav_lang:"Languages", nav_hobbies:"Hobbies", nav_contact:"Contact",
+    nav_edi:"EDI", nav_vol:"Volunteering", nav_lang:"Languages", nav_projects:"Projects", nav_contact:"Contact",
     hero_tag:"🏙️ Berlin, Germany · Open to Opportunities",
     hero_sub:"Compliance & Regulatory Affairs Professional<br>MSc Project Management · Distinction · Lean Six Sigma Green Belt",
     hero_m1:"DM Clinical Research (Remote, USA)", hero_m2:"Arden University Berlin — Class of 2026", hero_m3:"5+ Years Experience",
@@ -900,7 +967,7 @@ const T = {
   },
   de: {
     nav_about:"Über mich", nav_exp:"Erfahrung", nav_edu:"Bildung", nav_skills:"Fähigkeiten",
-    nav_edi:"EDI", nav_vol:"Ehrenamt", nav_lang:"Sprachen", nav_hobbies:"Hobbys", nav_contact:"Kontakt",
+    nav_edi:"EDI", nav_vol:"Ehrenamt", nav_lang:"Sprachen", nav_projects:"Projekte", nav_contact:"Kontakt",
     hero_tag:"🏙️ Berlin, Deutschland · Offen für Möglichkeiten",
     hero_sub:"Compliance &amp; Regulierungsexperte<br>MSc Projektmanagement · Auszeichnung · Lean Six Sigma Green Belt",
     hero_m1:"DM Clinical Research (Remote, USA)", hero_m2:"Arden University Berlin — Abschluss 2026", hero_m3:"5+ Jahre Erfahrung",
@@ -1054,14 +1121,18 @@ document.querySelectorAll('.reveal,.tl-item,.edu-card,.cert-card,.vol-card,.lang
 // ── Local page editor and gallery ─────────────────────────────────
 const editBtn = document.getElementById('toggleEditBtn');
 const removeBtn = document.getElementById('toggleRemoveBtn');
-const addHobbyBtn = document.getElementById('addHobbyBtn');
 const addSkillBtn = document.getElementById('addSkillBtn');
 const addSectionBtn = document.getElementById('addSectionBtn');
 const saveBtn = document.getElementById('saveEditsBtn');
 const clearBtn = document.getElementById('clearAllBtn');
+const loginBtn = document.getElementById('loginBtn');
+const loginOverlay = document.getElementById('loginOverlay');
+const loginForm = document.getElementById('loginForm');
+const usernameInput = document.getElementById('editorUsername');
+const passwordInput = document.getElementById('editorPassword');
+const loginError = document.getElementById('loginError');
 const togglePanelBtn = document.getElementById('togglePanelBtn');
 const adminPanel = document.getElementById('adminPanel');
-const hobbiesGrid = document.getElementById('hobbiesGrid');
 const toolsWrap = document.querySelector('.tools-wrap');
 const ctaSection = document.getElementById('contact');
 let editMode = false;
@@ -1069,6 +1140,119 @@ let removeMode = false;
 let skillTags = [];
 let addedSections = [];
 let removedSectionIds = [];
+
+const EDITOR_USERNAME = 'WaliBaig97';
+const EDITOR_PASSWORD = 'Likewali619';
+
+function isAuthenticated() {
+  return localStorage.getItem('pageEditorAuth') === 'true';
+}
+
+function setAuthenticated(value) {
+  localStorage.setItem('pageEditorAuth', value ? 'true' : 'false');
+  updateAdminPanel();
+}
+
+function requireAuth() {
+  if (!isAuthenticated()) {
+    openLoginDialog();
+    return false;
+  }
+  return true;
+}
+
+function updateAdminPanel() {
+  const auth = isAuthenticated();
+  adminPanel.classList.toggle('locked', !auth);
+  loginBtn.textContent = auth ? 'Logout' : 'Login to Edit';
+  [editBtn, removeBtn, addSkillBtn, addSectionBtn, saveBtn, clearBtn].forEach(button => {
+    if (!auth) button.classList.remove('active');
+  });
+  if (!auth) {
+    editMode = false;
+    removeMode = false;
+    setContentEditable(false);
+    document.querySelectorAll('.remove-item, .section-remove').forEach(btn => btn.style.display = 'none');
+  }
+}
+
+function openLoginDialog() {
+  loginOverlay.classList.remove('hidden');
+  loginOverlay.setAttribute('aria-hidden', 'false');
+  loginError.textContent = '';
+  passwordInput.value = '';
+  passwordInput.focus();
+}
+
+function closeLoginDialog() {
+  loginOverlay.classList.add('hidden');
+  loginOverlay.setAttribute('aria-hidden', 'true');
+}
+
+loginBtn.addEventListener('click', () => {
+  if (isAuthenticated()) {
+    setAuthenticated(false);
+  } else {
+    openLoginDialog();
+  }
+});
+
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  if (usernameInput.value === EDITOR_USERNAME && passwordInput.value === EDITOR_PASSWORD) {
+    setAuthenticated(true);
+    closeLoginDialog();
+  } else {
+    loginError.textContent = 'Incorrect username or password. Please try again.';
+  }
+});
+
+document.getElementById('loginCancelBtn').addEventListener('click', e => {
+  e.preventDefault();
+  closeLoginDialog();
+});
+
+const viewOverlay = document.getElementById('viewOverlay');
+const viewFrame = document.getElementById('viewFrame');
+const viewCloseBtn = document.getElementById('viewCloseBtn');
+const viewTitle = document.getElementById('viewTitle');
+const viewNote = document.getElementById('viewNote');
+
+function openProjectView(file, type, title) {
+  const encodedFile = encodeURIComponent(file);
+  let src = '';
+  if (type === 'pdf') {
+    src = `${file}#toolbar=0&navpanes=0&scrollbar=0`;
+  } else {
+    const origin = location.origin === 'null' ? '' : location.origin;
+    src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(`${origin}/${file}`)}`;
+  }
+  viewFrame.src = src;
+  viewTitle.textContent = `${title} — Preview`;
+  viewNote.textContent = type === 'pdf'
+    ? 'PDF is displayed in a view-only window. Download controls are hidden by the browser when supported.'
+    : 'If the presentation does not display, open the page through http://localhost:8080 using server.py.';
+  viewOverlay.classList.add('active');
+  viewOverlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeProjectView() {
+  viewFrame.src = '';
+  viewOverlay.classList.remove('active');
+  viewOverlay.setAttribute('aria-hidden', 'true');
+}
+
+document.querySelectorAll('.view-project-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    openProjectView(btn.dataset.projectFile, btn.dataset.projectType, btn.dataset.projectTitle);
+  });
+});
+
+viewCloseBtn.addEventListener('click', closeProjectView);
+viewOverlay.addEventListener('click', e => {
+  if (e.target === viewOverlay) closeProjectView();
+});
 
 function setContentEditable(active) {
   document.querySelectorAll('[data-i18n], [data-editable]').forEach(el => {
@@ -1079,6 +1263,7 @@ function setContentEditable(active) {
 }
 
 function toggleEditMode() {
+  if (!requireAuth()) return;
   editMode = !editMode;
   setContentEditable(editMode);
   editBtn.classList.toggle('active', editMode);
@@ -1090,6 +1275,7 @@ function toggleEditMode() {
 }
 
 function toggleRemoveMode() {
+  if (!requireAuth()) return;
   removeMode = !removeMode;
   removeBtn.classList.toggle('active', removeMode);
   removeBtn.textContent = removeMode ? 'Remove Mode On' : 'Remove Items';
@@ -1106,20 +1292,8 @@ function toggleRemoveMode() {
   }
 }
 
-function addHobbyCard() {
-  const hobby = prompt('Enter a new hobby or interest name');
-  if (!hobby) return;
-  const icon = prompt('Optional emoji icon for this hobby (for example 🎨, 🧠, 🎵)', '⭐') || '⭐';
-  const card = document.createElement('div');
-  card.className = 'hobby-card';
-  const key = `hobby-${Date.now()}`;
-  card.innerHTML = `<button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">${icon}</span><div class="h-name" data-editable data-editable-key="${key}">${hobby}</div>`;
-  hobbiesGrid.appendChild(card);
-  attachRemoveListeners();
-  savePageState();
-}
-
 function addSkillTag() {
+  if (!requireAuth()) return;
   const skill = prompt('Enter a new skill or tool name');
   if (!skill) return;
   const key = `skill-${Date.now()}`;
@@ -1135,6 +1309,7 @@ function addSkillTag() {
 }
 
 function addSection() {
+  if (!requireAuth()) return;
   const title = prompt('Enter the new section title');
   if (!title) return;
   const subtitle = prompt('Enter a short description for this section', 'Add a quick description here.') || '';
@@ -1267,13 +1442,13 @@ function getEditKey(el) {
 }
 
 function savePageState() {
+  if (!requireAuth()) return;
   const editable = {};
   document.querySelectorAll('[data-i18n], [data-editable]').forEach(el => {
     const key = getEditKey(el);
     if (key) editable[key] = el.innerHTML;
   });
   localStorage.setItem('pageEditorContent', JSON.stringify(editable));
-  localStorage.setItem('hobbyCards', JSON.stringify(Array.from(hobbiesGrid.querySelectorAll('.hobby-card')).map(card => ({ icon: card.querySelector('.h-ico')?.textContent || '', title: card.querySelector('.h-name')?.innerHTML || '', key: card.querySelector('.h-name')?.dataset.editableKey || '' }))));
   saveCustomState();
 }
 
@@ -1286,18 +1461,6 @@ function restorePageState() {
       if (key && editable[key] !== undefined) el.innerHTML = editable[key];
     });
   }
-  const storedHobbies = localStorage.getItem('hobbyCards');
-  if (storedHobbies) {
-    const cards = JSON.parse(storedHobbies);
-    hobbiesGrid.innerHTML = '';
-    cards.forEach(cardData => {
-      const card = document.createElement('div');
-      card.className = 'hobby-card';
-      const key = cardData.key || `hobby-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-      card.innerHTML = `<button class="remove-item" type="button" aria-label="Remove hobby">×</button><span class="h-ico">${cardData.icon || '⭐'}</span><div class="h-name" data-editable data-editable-key="${key}">${cardData.title}</div>`;
-      hobbiesGrid.appendChild(card);
-    });
-  }
   attachRemoveListeners();
   loadSkillTags();
   loadAddedSections();
@@ -1306,9 +1469,9 @@ function restorePageState() {
 }
 
 function clearAllEdits() {
+  if (!requireAuth()) return;
   if (!confirm('Restore the page to the original defaults?')) return;
   localStorage.removeItem('pageEditorContent');
-  localStorage.removeItem('hobbyCards');
   location.reload();
 }
 
@@ -1316,7 +1479,6 @@ clearBtn.addEventListener('click', clearAllEdits);
 saveBtn.addEventListener('click', savePageState);
 editBtn.addEventListener('click', toggleEditMode);
 removeBtn.addEventListener('click', toggleRemoveMode);
-addHobbyBtn.addEventListener('click', addHobbyCard);
 addSkillBtn.addEventListener('click', addSkillTag);
 addSectionBtn.addEventListener('click', addSection);
 togglePanelBtn.addEventListener('click', () => {
@@ -1325,6 +1487,7 @@ togglePanelBtn.addEventListener('click', () => {
 
 attachRemoveListeners();
 restorePageState();
+updateAdminPanel();
 
 window.addEventListener('beforeunload', () => {
   if (editMode) savePageState();
